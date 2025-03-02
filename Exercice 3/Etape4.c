@@ -80,12 +80,11 @@ int main()
 
 
     // Notification de morts des différentes Thread, avec une protection du compteur
-    char NomTuer[20];
     pthread_mutex_lock(&MutexCompteur);
     while(compteur > 0)
     {
         pthread_cond_wait(&condCompteur,&MutexCompteur);
-        strcpy(NomTuer,((char*)pthread_getspecific(cle)));
+        char* NomTuer = (char* )pthread_getspecific(cle);
 
         fprintf(stderr,"(Thread principale %u) le thread %s est mort \n",pthread_self(),NomTuer);
     }
@@ -129,7 +128,7 @@ void *fonctionThread(DONNEE *param)
     fprintf(stderr, "---------------\n\n");
 
     //On sauvegarde le param pour l'afficher lors de la mort
-    char *Nom = (char *)malloc(strlen(param->nom) + 1);
+    char *Nom = (char *)malloc(sizeof(param->nom));
     if (Nom == NULL) {
         fprintf(stderr, "Erreur d'allocation mémoire.\n");
         pthread_exit(NULL);  // Si l'allocation échoue, quitter le thread
