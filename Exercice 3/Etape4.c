@@ -40,12 +40,16 @@ int compteur;                           //? Variable globale qui permet de savoi
 
 
 void *fonctionThread(DONNEE *param);    // ?Fonction qui va être éxécuté par les différents thread
+void HandlerSIGINT(int);
+
+
 
 int main()
 {
     /* 
     ? Fonction Main  
-     * Initialisation des différents mutex, et variable de conditions
+     * Initialisation des différents mutex, et variable de conditions, key
+     * On supprime tout les signaux
      * Boucle de création
         * Ouverture d'un mutex pour protégé la variable globale Param 
         * On copie la structure de DONNEE[i] dans une variable nommer param,
@@ -69,6 +73,14 @@ int main()
     pthread_cond_init(&condCompteur, NULL);
 
 
+    //on masque le SIGINT
+
+    sigset_t maskSIGINT;
+    sigemptyset(&maskSIGINT);
+    sigaddset(&maskSIGINT, SIGINT);
+    sigprocmask(SIG_SETMASK, &maskSIGINT, NULL);
+
+
     // Création des différents Thread avec une protection de param
     fprintf(stderr,"Création des Threads secondaire \n\n");
     for (int i = 0; i < 4; i++)
@@ -84,9 +96,7 @@ int main()
     while(compteur > 0)
     {
         pthread_cond_wait(&condCompteur,&MutexCompteur);
-        char* NomTuer = (char* )pthread_getspecific(cle);
-
-        fprintf(stderr,"(Thread principale %u) le thread %s est mort \n",pthread_self(),NomTuer);
+        fprintf(stderr,"(Thread principale %u) un thread est mort \n",pthread_self());
     }
     pthread_mutex_unlock(&MutexCompteur);
 
@@ -116,6 +126,25 @@ int main()
 
 void *fonctionThread(DONNEE *param)
 {   
+
+    // On démasque le SIGINT
+    sigset_t maskSIGINT;
+    sigdelset(&maskSIGINT, SIGINT);
+    sigprocmask(SIG_SETMASK, &maskSIGINT, NULL);
+
+    //armement du signal SIGINT
+
+    struct sigaction A; 
+    A.sa_handler = HandlerSIGINT; 
+    sigemptyset(&A.sa_mask);    
+    A.sa_flags = 0;
+
+   if ((sigaction(SIGINT, &A, NULL)) == -1)
+    {
+      fprintf(stderr,"(ThreadSecondaire %d.%u) erreur de l'armement de SIGINT",pthread_self(), getpid());
+      exit(0);
+    }
+
     // On lock le compteur pour l'incrementer
     pthread_mutex_lock(&MutexCompteur);
     compteur++;
@@ -129,31 +158,36 @@ void *fonctionThread(DONNEE *param)
 
     //On sauvegarde le param pour l'afficher lors de la mort
     char *Nom = (char *)malloc(sizeof(param->nom));
-    if (Nom == NULL) {
-        fprintf(stderr, "Erreur d'allocation mémoire.\n");
-        pthread_exit(NULL);  // Si l'allocation échoue, quitter le thread
-    }
-
     strcpy(Nom, param->nom); // Copier le nom dans l'espace alloué
-
-    if (pthread_setspecific(cle, (void *)Nom));
-
     int Seconde = param->nbSecondes;
+
+    if (pthread_setspecific(cle, (void *)Nom))
+        fprintf(stderr,"Une erreur est survenue lors du setspecific");
+
+        
 
 
     //On initialise la structure duree pour le nanosleep
-    struct timespec duree;
+    struct timespec duree,reste;
     duree.tv_sec = param->nbSecondes; // Secondes
 
 
     //On unlock le mutexParam
     pthread_mutex_unlock(&MutexParam);
 
-
-
     //On attend x seconde
-    nanosleep(&duree,NULL);
 
+    do
+    {
+        if(nanosleep(&duree,&reste) == -1)
+        {
+            fprintf(stderr,"(ThreadSecondaire %d.%u) La fonction a été interrompu lors de son attente de %d sec,de il lui reste %ld seconde à attendre \n",pthread_self(), getpid(),duree.tv_sec,reste.tv_sec);
+            duree.tv_sec = reste.tv_sec;
+        }
+    } while (reste.tv_sec > 0);
+    
+
+    
     fprintf(stderr, "(ThreadSecondaire %d.%u) \t Le thread secondaire %s a bien fini d'attendre %d  \n",getpid(), pthread_self(), Nom,Seconde);
 
 
@@ -166,4 +200,19 @@ void *fonctionThread(DONNEE *param)
     // On quitte le thread
     pthread_exit(NULL);
 
+}
+
+
+void HandlerSIGINT(int signal)
+{
+    fprintf(stderr,"\n\n----------------------SIGINT----------------------\n");
+    fprintf(stderr,"\n(ThreadSecondaire %d.%u) est rentré dans le SIGINT \n",pthread_self(), getpid());
+
+    char * NomThread = (char*)pthread_getspecific(cle);
+    fprintf(stderr,"(ThreadSecondaire %d.%u) s'occupe de %s \n",pthread_self(), getpid(),NomThread);
+
+
+
+    fprintf(stderr,"\n\n------------------FIN SIGINT----------------------\n");
+    
 }
