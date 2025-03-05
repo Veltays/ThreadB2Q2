@@ -167,6 +167,7 @@ void *fonctionThread(DONNEE *param)
         
 
 
+
     //On initialise la structure duree pour le nanosleep
     struct timespec duree,reste;
     duree.tv_sec = param->nbSecondes; // Secondes
