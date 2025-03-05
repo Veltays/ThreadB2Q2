@@ -57,3 +57,4 @@ void* fonctionThread() {
     pthread_exit(&occ); // Retourner le pointeur vers le nombre d'occurrences
 }
 
+
