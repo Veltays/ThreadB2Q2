@@ -32,12 +32,9 @@ typedef struct
   int cache;
 } S_FANTOME;
 
-typedef struct
-{
-  int L;
-  int C;
-  int dir;
-} S_PAC;
+int L;
+int C;
+int dir;
 
 typedef struct
 {
@@ -48,24 +45,34 @@ typedef struct
 S_CASE tab[NB_LIGNE][NB_COLONNE];
 
 // Différent thread
-pthread_t threadPacMan;
+pthread_t ThreadPacMan;
+pthread_t ThreadEvent;
 
-//
+// mutex
 pthread_mutex_t mutexTab;
 
 // Fonction Thread
 void *FonctionPacMan();
+void *FonctionEvent();
 
 //Fonction Signaux
-void HandlerSIGINT(int sig);
+void HandlerSIGINT(int sig);  // <- gauche
+void HandlerSIGHUP(int sig);  // -> droite
+void HandlerSIGUSR1(int sig); // ^ up
+void HandlerSIGUSR2(int sig); // v down
 
+// FonctionUtile
 void DessineGrilleBase();
 void Attente(int milli);
 void setTab(int l, int c, int presence = VIDE, pthread_t tid = 0);
 
+void PacInfo();
+const char *presence_nom(int);
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 int main(int argc, char *argv[])
 {
+
   EVENT_GRILLE_SDL event;
   sigset_t mask;
   struct sigaction sigAct;
@@ -73,14 +80,16 @@ int main(int argc, char *argv[])
 
   srand((unsigned)time(NULL));
 
-  // Ouverture de la fenetre graphique
-  printf("(MAIN%p) Ouverture de la fenetre graphique\n", pthread_self());
-  fflush(stdout);
-  if (OuvertureFenetreGraphique() < 0)
-  {
-    printf("Erreur de OuvrirGrilleSDL\n");
+  { // Ouverture de la fenetre graphique
+
+    fprintf(stderr, "(PRINCIPALE -- %u.%d) \t Ouverture de la fenetre graphique\n", pthread_self(), getpid());
     fflush(stdout);
-    exit(1);
+    if (OuvertureFenetreGraphique() < 0)
+    {
+      printf("Erreur de OuvrirGrilleSDL\n");
+      fflush(stdout);
+      exit(1);
+    }
   }
 
   DessineGrilleBase();
@@ -94,97 +103,44 @@ int main(int argc, char *argv[])
   // DessineFantomeComestible(13, 15);
   // DessineBonus(5, 15);
 
-
-  /*
-    ? Armement du signal SIGINT
-
-      - Création d'une structure de type sigaction.
-      - Association de la structure avec le Handler(Fonction à exécuter) SIGINT.
-      - On vide le set de la structure, permettant ainsi la réception de tous les signaux dans le handler.
-      - On n'active aucune option particulière lors de la réception d'un signal.
-      - On lie notre signal à notre structure sigaction.
-  */
-
-
-  struct sigaction A;
-  A.sa_handler = HandlerSIGINT;
-  sigemptyset(&A.sa_mask);
-  A.sa_flags = 0;
-
-  if ((sigaction(SIGINT, &A, NULL)) == -1)
-  {
-    perror("(Thread pincipale %u) \t Erreur lors de l'armement du signal SINGINT\n");
-    exit(1);
-  }
-  fprintf(stderr, "(Thread principale%u) \t le signal SIGINT à bien été armé \n", pthread_self());
-
-
-
-  /*
-   ? Initialisation des mutex, des conditions etc.
-
-  */
+  // ? **************************  Mon code ****************************
 
   pthread_mutex_init(&mutexTab, NULL);
-
-
 
   /*
    ? Création des différents thread
 
-
   */
-  pthread_create(&threadPacMan, NULL, (void *(*)(void *))FonctionPacMan, NULL);
 
+  pthread_create(&ThreadPacMan, NULL, (void *(*)(void *))FonctionPacMan, NULL);
+  pthread_create(&ThreadEvent, NULL, (void *(*)(void *))FonctionEvent, NULL);
 
   /*
    ? Attente de la morts des threads
-
+    * Attente de la mort du thread EVENT qui ne retourne rien
 
   */
-  pthread_join(threadPacMan, NULL);
+  pthread_join(ThreadEvent, NULL);
 
-  ok = 0;
-  while (!ok)
-  {
-    event = ReadEvent();
-    if (event.type == CROIX)
-      ok = 1;
-    if (event.type == CLAVIER)
-    {
-      switch (event.touche)
-      {
-      case 'q':
-        ok = 1;
-        break;
-      case KEY_RIGHT:
-        printf("Fleche droite !\n");
-        break;
-      case KEY_LEFT:
-        printf("Fleche gauche !\n");
-        break;
-      case KEY_UP:
-        printf("Fleche De haut !\n");
-        break;
-      case KEY_DOWN:
-        printf("Fleche De bas !\n");
-        break;
-      }
-    }
-  }
-  printf("Attente de 1500 millisecondes...\n");
+  /*Fin du programme*/
+
+  fprintf(stderr, "(PRINCIPALE -- %u.%d) \t Attente de 1500 millisecondes...\n", pthread_self(), getpid());
   //Attente(1500);
   // -------------------------------------------------------------------------
 
   // Fermeture de la fenetre
-  printf("(MAIN %p) Fermeture de la fenetre graphique...", pthread_self());
+  fprintf(stderr, "(PRINCIPALE -- %u.%d) \t Fermeture de la fenetre graphique...\n", pthread_self(), getpid());
   fflush(stdout);
   FermetureFenetreGraphique();
-  printf("OK\n");
+  fprintf(stderr, "(PRINCIPALE -- %u.%d) \t OK\n", pthread_self(), getpid());
   fflush(stdout);
 
   exit(0);
 }
+
+// ? **************************************************************************************************************
+// ? ***************************************FONCTION UTILE ****************************************************
+// ? **************************************************************************************************************
 
 //*********************************************************************************************
 void Attente(int milli)
@@ -243,11 +199,156 @@ void DessineGrilleBase()
     }
 }
 
-//*********************************************************************************************
+void PacInfo()
+{
+  fprintf(stderr, "\n\n ---------------------------- PAC INFO ----------------------------------- \n");
+  fprintf(stderr, "(PACMAN     -- %u.%d)\n", pthread_self(), getpid());
+  fprintf(stderr, "Position  : tab[%d][%d]\n", L, C);
+  fprintf(stderr, "Direction : %d \n", dir);
+  fprintf(stderr, "Obstacle  : \n");
+  fprintf(stderr, "\t     %d\n", tab[L - 1][C].presence);
+  fprintf(stderr, "\t %d   %d   %d\n", tab[L][C - 1].presence, tab[L][C].presence, tab[L][C + 1].presence);
+  fprintf(stderr, "\t     %d\n", tab[L + 1][C].presence);
+  fprintf(stderr, "\n");
+
+  fprintf(stderr, "\t                   %-15s\n", presence_nom(tab[L - 1][C].presence));
+  fprintf(stderr, "\t %-15s  %-15s   %-15s\n",
+          presence_nom(tab[L][C - 1].presence),
+          presence_nom(tab[L][C].presence),
+          presence_nom(tab[L][C + 1].presence));
+  fprintf(stderr, "\t                   %-15s\n", presence_nom(tab[L + 1][C].presence));
+  fprintf(stderr, "\n\n ---------------------------- -------------------------------------------- \n");
+  fprintf(stderr, "\n");
+}
+
+const char *presence_nom(int presence)
+{
+  switch (presence)
+  {
+  case VIDE:
+    return "Vide";
+  case MUR:
+    return "Mur";
+  case PACMAN:
+    return "Pac-Man";
+  case PACGOM:
+    return "Pac-Gom";
+  case SUPERPACGOM:
+    return "Super Pac-Gom";
+  case BONUS:
+    return "Bonus";
+  case FANTOME:
+    return "Fantôme";
+  default:
+    return "Inconnu";
+  }
+}
+
+// ? **************************************************************************************************************
+// ? ***************************************FONCTION DE THREAD ****************************************************
+// ? **************************************************************************************************************
 
 void *FonctionPacMan()
 {
-  S_PAC PacPosi;
+
+  { // Armement des signaux
+
+    /*
+    ? Armement du signal SIGINT
+
+      - Création d'une structure de type sigaction.
+      - Association de la structure avec le Handler(Fonction à exécuter) SIGINT.
+      - On vide le set de la structure, permettant ainsi la réception de tous les signaux dans le handler.
+      - On n'active aucune option particulière lors de la réception d'un signal.
+      - On lie notre signal à notre structure sigaction.
+  */
+
+    struct sigaction LEFT;
+    LEFT.sa_handler = HandlerSIGINT;
+    sigemptyset(&LEFT.sa_mask);
+    LEFT.sa_flags = 0;
+
+    if ((sigaction(SIGINT, &LEFT, NULL)) == -1)
+    {
+      fprintf(stderr, "(PACMAN     -- %u.%d) \t ERREUR lors de l'Armenent du SIGINT  \n", pthread_self(), getpid());
+      exit(1);
+    }
+    fprintf(stderr, "(PACMAN     -- %u.%d) \t Armenent du SIGINT s'est déroulé sans soucis \n", pthread_self(), getpid());
+
+    /*
+    ? Armement du signal SIGHUP
+
+      - Création d'une structure de type sigaction.
+      - Association de la structure avec le Handler(Fonction à exécuter) SIGHUP.
+      - On vide le set de la structure, permettant ainsi la réception de tous les signaux dans le handler.
+      - On n'active aucune option particulière lors de la réception d'un signal.
+      - On lie notre signal à notre structure sigaction.
+  */
+
+    struct sigaction RIGHT;
+    RIGHT.sa_handler = HandlerSIGHUP;
+    sigemptyset(&RIGHT.sa_mask);
+    RIGHT.sa_flags = 0;
+
+    if ((sigaction(SIGHUP, &RIGHT, NULL)) == -1)
+    {
+      fprintf(stderr, "(PACMAN     -- %u.%d) \t ERREUR lors de l'Armenent du SIGHUP  \n", pthread_self(), getpid());
+      exit(1);
+    }
+    fprintf(stderr, "(PACMAN     -- %u.%d) \t Armenent du SIGHUP s'est déroulé sans soucis \n", pthread_self(), getpid());
+
+    /*
+    ? Armement du signal SIGUSR1
+
+      - Création d'une structure de type sigaction.
+      - Association de la structure avec le Handler(Fonction à exécuter) SIGUSR1.
+      - On vide le set de la structure, permettant ainsi la réception de tous les signaux dans le handler.
+      - On n'active aucune option particulière lors de la réception d'un signal.
+      - On lie notre signal à notre structure sigaction.
+  */
+
+    struct sigaction UP;
+    UP.sa_handler = HandlerSIGUSR1;
+    sigemptyset(&UP.sa_mask);
+    UP.sa_flags = 0;
+
+    if ((sigaction(SIGUSR1, &UP, NULL)) == -1)
+    {
+      fprintf(stderr, "(PACMAN     -- %u.%d) \t ERREUR lors de l'Armenent du SIGUSR1  \n", pthread_self(), getpid());
+      exit(1);
+    }
+    fprintf(stderr, "(PACMAN     -- %u.%d) \t Armenent du SIGUSR1 s'est déroulé sans soucis \n", pthread_self(), getpid());
+
+    /*
+    ? Armement du signal SIGUSR2
+
+      - Création d'une structure de type sigaction.
+      - Association de la structure avec le Handler(Fonction à exécuter) SIGUSR2.
+      - On vide le set de la structure, permettant ainsi la réception de tous les signaux dans le handler.
+      - On n'active aucune option particulière lors de la réception d'un signal.
+      - On lie notre signal à notre structure sigaction.
+  */
+
+    struct sigaction DOWN;
+    DOWN.sa_handler = HandlerSIGUSR2;
+    sigemptyset(&DOWN.sa_mask);
+    DOWN.sa_flags = 0;
+
+    if ((sigaction(SIGUSR2, &DOWN, NULL)) == -1)
+    {
+      fprintf(stderr, "(PACMAN     -- %u.%d) \t ERREUR lors de l'Armenent du SIGUSR2  \n", pthread_self(), getpid());
+      exit(1);
+    }
+    fprintf(stderr, "(PACMAN     -- %u.%d) \t Armenent du SIGUSR2 s'est déroulé sans soucis \n", pthread_self(), getpid());
+  }
+  sigset_t masque, ancien_masque;
+  { // Préparation du blocage des signaux de direction
+    sigemptyset(&masque);
+    sigaddset(&masque, SIGINT); 
+    sigaddset(&masque, SIGHUP);
+    sigaddset(&masque, SIGUSR1); 
+    sigaddset(&masque, SIGUSR2); 
+  }
 
   /*
     ? Position initiale de PACMAN on protégé bien avec un mutex 
@@ -257,61 +358,163 @@ void *FonctionPacMan()
          ! on unlock le mutec
       * On Dessine PACMAN a la case et a la directions désiré 
   */
-
-  fprintf(stderr, " (PACMAN %d.%u) PACMAN est bien rentré dans son thread. \n", pthread_self(), getpid());
-  PacPosi.L = 15;
-  PacPosi.C = 8;
-  PacPosi.dir = GAUCHE;
+  fprintf(stderr, "(PACMAN     -- %u.%d) \t PACMAN est bien rentré dans son thread. \n", pthread_self(), getpid());
+  L = 15;
+  C = 8;
+  dir = GAUCHE;
 
   pthread_mutex_lock(&mutexTab);
-  setTab(PacPosi.L, PacPosi.C, PACMAN, pthread_self());
+  setTab(L, C, PACMAN, pthread_self());
+  DessinePacMan(L, C, dir);
   pthread_mutex_unlock(&mutexTab);
-  DessinePacMan(PacPosi.L, PacPosi.C, PacPosi.dir);
+  fprintf(stderr, "(PACMAN     -- %u.%d) \t PACMAN à été placé en (%d,%d) vers %d dans TAB \n", pthread_self(), getpid(), L, C, dir);
 
-
-    /*
+  /*
     ? Boucle d'avance automatique
       * On attend 0.3S
       * On vérifié qu'il n'y a personne au coordonné tab[Ligne][COlonne] grace a l'attribut présence 
-        * S'il n'y a personne, on efface PACMAN
-        * On vérifie qu'on est bien dans notre tableau
-          * Si on est supérieur a 0 alors on décemente   
-          * Sinon on se déplace a l'autre bout du tableau 
+        * S'il n'y a personne, 
+          * On efface PACMAN
+          * On vérifie qu'on est bien dans notre tableau
+          * Si on est supérieur a 0 
+            * alors on décremente   
+            * Sinon on se déplace a l'autre bout du tableau 
           ! On lock le mutex
-        * on met a la case désiré qu'il y a un PACMAN avec notre threadId
+          * on met a la case désiré qu'il y a un PACMAN avec notre threadId
           ! on unlock le mutec
-        * On Dessine PACMAN a la case et a la directions désiré 
+          * On Dessine PACMAN a la case et a la directions désiré 
       Et on recommence..
   */
+
+  fprintf(stderr, "(PACMAN     -- %u.%d) \t PACMAN rentre dans la boucle d'avance auto. \n", pthread_self(), getpid());
+
 
 
   while (1)
   {
+    PacInfo();
+
+    sigprocmask(SIG_BLOCK, &masque, &ancien_masque);
     Attente(300); //Attente de 0.3s
+    fprintf(stderr, "(PACMAN     -- %u.%d) \t FIN D'ATTENTE %d \n", pthread_self(), getpid(), dir);
+    sigprocmask(SIG_SETMASK, &ancien_masque, NULL);
 
-    if (tab[PacPosi.L][PacPosi.C - 1].presence == VIDE)
-    {
-      EffaceCarre(PacPosi.L, PacPosi.C); // On efface PACMAN
+    fprintf(stderr, "(PACMAN     -- %u.%d) \t PACMAN dois se déplacé vers la %d \n", pthread_self(), getpid(), dir);
 
-      if (PacPosi.C > 0)                // On le decalle
-        PacPosi.C--;
-      else
-        PacPosi.C = NB_COLONNE;
+    pthread_mutex_lock(&mutexTab);
+    setTab(L, C, VIDE);
+    EffaceCarre(L, C);
+    pthread_mutex_unlock(&mutexTab);
+
+    if (L == 9 && C == 0 && dir == GAUCHE)
+      C = NB_COLONNE-1;
+    else 
+      if (L == 9 && C == 16 && dir == DROITE)
+        C = 0;
+    else
+      switch (dir)
+      {
+      case GAUCHE:
+        if (tab[L][C - 1].presence == VIDE)
+          C--;
+        break;
+
+      case DROITE:
+        if (tab[L][C + 1].presence == VIDE)
+          C++;
+        break;
+
+      case HAUT:
+        if (tab[L - 1][C].presence == VIDE)
+          L--;
+        break;
+
+      case BAS:
+        if (tab[L + 1][C].presence == VIDE)
+          L++;
+        break;
+      }
 
 
-      pthread_mutex_lock(&mutexTab);                         
-      setTab(PacPosi.L, PacPosi.C, PACMAN, pthread_self());
-      pthread_mutex_unlock(&mutexTab);
-      DessinePacMan(PacPosi.L, PacPosi.C, PacPosi.dir);
-    }
+    sigprocmask(SIG_BLOCK, &masque, &ancien_masque);
+    pthread_mutex_lock(&mutexTab);
+    setTab(L, C, PACMAN, pthread_self());
+    DessinePacMan(L, C, dir);
+    pthread_mutex_unlock(&mutexTab);
+    sigprocmask(SIG_SETMASK, &ancien_masque);
+
+
+    fprintf(stderr, "(PACMAN     -- %u.%d) \t PACMAN à été placé en (%d,%d) vers %d dans TAB \n", pthread_self(), getpid(), L, C, dir);
   }
-
-  
+  fprintf(stderr, "(PACMAN     -- %u.%d) \t PACMAN à bien quitté son Thread. \n", pthread_self(), getpid());
   pthread_exit(NULL);
 }
 
+void *FonctionEvent()
+{
+  fprintf(stderr, "(EVENT      -- %u.%d) \t EVENT est bien rentré dans son Thread\n", pthread_self(), getpid());
+  char ok;
+  EVENT_GRILLE_SDL event;
+
+  ok = 0;
+  while (!ok)
+  {
+    event = ReadEvent();
+    if (event.type == CROIX)
+      ok = 1;
+    if (event.type == CLAVIER)
+    {
+      switch (event.touche)
+      {
+      case 'q':
+        ok = 1;
+        break;
+      case KEY_RIGHT:
+        fprintf(stderr, "(EVENT      -- %u.%d) \t - Flèche droite !\n", pthread_self(), getpid());
+        pthread_kill(ThreadPacMan, SIGHUP);
+        break;
+      case KEY_LEFT:
+        fprintf(stderr, "(EVENT      -- %u.%d) \t - Flèche gauche !\n", pthread_self(), getpid());
+        pthread_kill(ThreadPacMan, SIGINT);
+        break;
+      case KEY_UP:
+        fprintf(stderr, "(EVENT      -- %u.%d) \t - Flèche De haut !\n", pthread_self(), getpid());
+        pthread_kill(ThreadPacMan, SIGUSR1);
+        break;
+      case KEY_DOWN:
+        fprintf(stderr, "(EVENT      -- %u.%d) \t - Flèche De bas !\n", pthread_self(), getpid());
+        pthread_kill(ThreadPacMan, SIGUSR2);
+        break;
+      }
+    }
+  }
+
+  fprintf(stderr, "(EVENT      -- %u.%d) \t Clique sur le bouton Croix \n", pthread_self(), getpid()); //-7
+  fprintf(stderr, "(EVENT      -- %u.%d) \t EVENT à bien quitté son Thread \n", pthread_self(), getpid());
+  pthread_exit(NULL);
+}
+
+// ? **************************************************************************************************************
+// ? *************************************** SIGNAUX ****************************************************
+// ? **************************************************************************************************************
+
 void HandlerSIGINT(int sig)
 {
-  fprintf(stderr, "Vous etez bien entrer dans le SIGINT");
-  exit(0);
+  fprintf(stderr, "\n(SIGINT     -- %u.%d) \t Vous etez bien entrer dans le SIGINT PACMAN VA A GAUCHE\n", pthread_self(), getpid());
+  dir = GAUCHE;
+}
+
+void HandlerSIGHUP(int sig)
+{
+  dir = DROITE;
+}
+
+void HandlerSIGUSR1(int sig)
+{
+  dir = HAUT;
+}
+
+void HandlerSIGUSR2(int sig)
+{
+  dir = BAS;
 }
