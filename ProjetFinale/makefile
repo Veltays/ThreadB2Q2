@@ -9,9 +9,9 @@ PROGRAMS = PacMan
 
 ALL: $(PROGRAMS)
 
-PacMan:	PacMan2.cpp $(OBJS)
+PacMan:	PacManX.cpp $(OBJS)
 	echo Creation de PacMan...
-	$(CC) PacMan2.cpp -o PacMan $(OBJS) -lrt -lpthread -lSDL
+	$(CC) PacManX.cpp -o PacMan $(OBJS) -lrt -lpthread -lSDL
 
 $(GRILLESDL)/GrilleSDL.o:	$(GRILLESDL)/GrilleSDL.c $(GRILLESDL)/GrilleSDL.h
 		echo Creation de GrilleSDL.o ...
