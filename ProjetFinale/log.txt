@@ -1,0 +1,676 @@
+Script démarré sur 2025-03-07 16:57:30+01:00
+(PRINCIPALE -- 154651520.6101) 	 Ouverture de la fenetre graphique
+(PACMAN     -- 80721664.6101) 	 Armenent du SIGINT s'est déroulé sans soucis 
+(PACMAN     -- 80721664.6101) 	 Armenent du SIGHUP s'est déroulé sans soucis 
+(PACMAN     -- 80721664.6101) 	 Armenent du SIGUSR1 s'est déroulé sans soucis 
+(PACMAN     -- 80721664.6101) 	 Armenent du SIGUSR2 s'est déroulé sans soucis 
+(PACMAN     -- 80721664.6101) 	 PACMAN est bien rentré dans son thread. 
+(EVENT      -- 72328960.6101) 	 EVENT est bien rentré dans son Thread
+(PACMAN     -- 80721664.6101) 	 PACMAN à été placé en (15,8) vers 500002 dans TAB 
+(PACMAN     -- 80721664.6101) 	 PACMAN rentre dans la boucle d'avance auto. 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 80721664.6101)
+Position  : tab[15][8]
+Direction : 500002 
+Delais : 300 
+score : 0 
+PacGomRestante : -1 
+Obstacle  : 
+	     1
+	 0   2   0
+	     1
+
+	                   Mur            
+	 Vide             Pac-Man           Vide           
+	                   Mur            
+
+
+ ---------------------------- -------------------------------------------- 
+
+(PACGOM     -- 89114368.6101) 	 Je place la PACGOM EN tab[1][1] 
+(PACGOM     -- 89114368.6101) 	 Je place la PACGOM EN tab[1][2] 
+(PACGOM     -- 89114368.6101) 	 Je place la PACGOM EN tab[1][3] 
+(PACGOM     -- 89114368.6101) 	 Je place la PACGOM EN tab[2][1] 
+(PACGOM     -- 89114368.6101) 	 Je place la PACGOM EN tab[3][1] 
+(PACGOM     -- 89114368.6101) 	 Je place la PACGOM EN tab[3][2] 
+(PACGOM     -- 89114368.6101) 	 Je place la PACGOM EN tab[3][3] 
+(PACGOM     -- 89114368.6101) 	 Je place la PACGOM EN tab[4][1] 
+(PACMAN     -- 80721664.6101) 	 PACMAN à été placé en (15,7) vers 500002 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 80721664.6101)
+Position  : tab[15][7]
+Direction : 500002 
+Delais : 300 
+score : 0 
+PacGomRestante : 7 
+Obstacle  : 
+	     0
+	 0   2   0
+	     1
+
+	                   Vide           
+	 Vide             Pac-Man           Vide           
+	                   Mur            
+
+
+ ---------------------------- -------------------------------------------- 
+
+(PACMAN     -- 80721664.6101) 	 PACMAN à été placé en (15,6) vers 500002 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 80721664.6101)
+Position  : tab[15][6]
+Direction : 500002 
+Delais : 300 
+score : 0 
+PacGomRestante : 7 
+Obstacle  : 
+	     1
+	 0   2   0
+	     0
+
+	                   Mur            
+	 Vide             Pac-Man           Vide           
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(PACMAN     -- 80721664.6101) 	 PACMAN à été placé en (15,5) vers 500002 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 80721664.6101)
+Position  : tab[15][5]
+Direction : 500002 
+Delais : 300 
+score : 0 
+PacGomRestante : 7 
+Obstacle  : 
+	     1
+	 0   2   0
+	     1
+
+	                   Mur            
+	 Vide             Pac-Man           Vide           
+	                   Mur            
+
+
+ ---------------------------- -------------------------------------------- 
+
+(EVENT      -- 72328960.6101) 	 - Flèche De haut !
+(PACMAN     -- 80721664.6101) 	 PACMAN à été placé en (15,5) vers 500000 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 80721664.6101)
+Position  : tab[15][5]
+Direction : 500000 
+Delais : 300 
+score : 0 
+PacGomRestante : 7 
+Obstacle  : 
+	     1
+	 0   2   0
+	     1
+
+	                   Mur            
+	 Vide             Pac-Man           Vide           
+	                   Mur            
+
+
+ ---------------------------- -------------------------------------------- 
+
+(EVENT      -- 72328960.6101) 	 - Flèche gauche !
+
+(SIGINT     -- 80721664.6101) 	 Vous etez bien entrer dans le SIGINT PACMAN VA A GAUCHE
+(PACMAN     -- 80721664.6101) 	 PACMAN à été placé en (15,4) vers 500002 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 80721664.6101)
+Position  : tab[15][4]
+Direction : 500002 
+Delais : 300 
+score : 0 
+PacGomRestante : 7 
+Obstacle  : 
+	     0
+	 1   2   0
+	     0
+
+	                   Vide           
+	 Mur              Pac-Man           Vide           
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(EVENT      -- 72328960.6101) 	 - Flèche De haut !
+(PACMAN     -- 80721664.6101) 	 PACMAN à été placé en (14,4) vers 500000 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 80721664.6101)
+Position  : tab[14][4]
+Direction : 500000 
+Delais : 300 
+score : 0 
+PacGomRestante : 7 
+Obstacle  : 
+	     0
+	 1   2   1
+	     0
+
+	                   Vide           
+	 Mur              Pac-Man           Mur            
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(PACMAN     -- 80721664.6101) 	 PACMAN à été placé en (13,4) vers 500000 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 80721664.6101)
+Position  : tab[13][4]
+Direction : 500000 
+Delais : 300 
+score : 0 
+PacGomRestante : 7 
+Obstacle  : 
+	     0
+	 0   2   0
+	     0
+
+	                   Vide           
+	 Vide             Pac-Man           Vide           
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(PACMAN     -- 80721664.6101) 	 PACMAN à été placé en (12,4) vers 500000 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 80721664.6101)
+Position  : tab[12][4]
+Direction : 500000 
+Delais : 300 
+score : 0 
+PacGomRestante : 7 
+Obstacle  : 
+	     0
+	 1   2   1
+	     0
+
+	                   Vide           
+	 Mur              Pac-Man           Mur            
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(PACMAN     -- 80721664.6101) 	 PACMAN à été placé en (11,4) vers 500000 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 80721664.6101)
+Position  : tab[11][4]
+Direction : 500000 
+Delais : 300 
+score : 0 
+PacGomRestante : 7 
+Obstacle  : 
+	     0
+	 1   2   1
+	     0
+
+	                   Vide           
+	 Mur              Pac-Man           Mur            
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(PACMAN     -- 80721664.6101) 	 PACMAN à été placé en (10,4) vers 500000 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 80721664.6101)
+Position  : tab[10][4]
+Direction : 500000 
+Delais : 300 
+score : 0 
+PacGomRestante : 7 
+Obstacle  : 
+	     0
+	 1   2   1
+	     0
+
+	                   Vide           
+	 Mur              Pac-Man           Mur            
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(PACMAN     -- 80721664.6101) 	 PACMAN à été placé en (9,4) vers 500000 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 80721664.6101)
+Position  : tab[9][4]
+Direction : 500000 
+Delais : 300 
+score : 0 
+PacGomRestante : 7 
+Obstacle  : 
+	     0
+	 0   2   0
+	     0
+
+	                   Vide           
+	 Vide             Pac-Man           Vide           
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(PACMAN     -- 80721664.6101) 	 PACMAN à été placé en (8,4) vers 500000 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 80721664.6101)
+Position  : tab[8][4]
+Direction : 500000 
+Delais : 300 
+score : 0 
+PacGomRestante : 7 
+Obstacle  : 
+	     0
+	 1   2   1
+	     0
+
+	                   Vide           
+	 Mur              Pac-Man           Mur            
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(PACMAN     -- 80721664.6101) 	 PACMAN à été placé en (7,4) vers 500000 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 80721664.6101)
+Position  : tab[7][4]
+Direction : 500000 
+Delais : 300 
+score : 0 
+PacGomRestante : 7 
+Obstacle  : 
+	     0
+	 1   2   1
+	     0
+
+	                   Vide           
+	 Mur              Pac-Man           Mur            
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(PACMAN     -- 80721664.6101) 	 PACMAN à été placé en (6,4) vers 500000 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 80721664.6101)
+Position  : tab[6][4]
+Direction : 500000 
+Delais : 300 
+score : 0 
+PacGomRestante : 7 
+Obstacle  : 
+	     0
+	 1   2   1
+	     0
+
+	                   Vide           
+	 Mur              Pac-Man           Mur            
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(PACMAN     -- 80721664.6101) 	 PACMAN à été placé en (5,4) vers 500000 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 80721664.6101)
+Position  : tab[5][4]
+Direction : 500000 
+Delais : 300 
+score : 0 
+PacGomRestante : 7 
+Obstacle  : 
+	     0
+	 0   2   1
+	     0
+
+	                   Vide           
+	 Vide             Pac-Man           Mur            
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(PACMAN     -- 80721664.6101) 	 PACMAN à été placé en (4,4) vers 500000 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 80721664.6101)
+Position  : tab[4][4]
+Direction : 500000 
+Delais : 300 
+score : 0 
+PacGomRestante : 7 
+Obstacle  : 
+	     0
+	 1   2   1
+	     0
+
+	                   Vide           
+	 Mur              Pac-Man           Mur            
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(EVENT      -- 72328960.6101) 	 - Flèche gauche !
+
+(SIGINT     -- 80721664.6101) 	 Vous etez bien entrer dans le SIGINT PACMAN VA A GAUCHE
+(PACMAN     -- 80721664.6101) 	 PACMAN à été placé en (4,4) vers 500002 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 80721664.6101)
+Position  : tab[4][4]
+Direction : 500002 
+Delais : 300 
+score : 0 
+PacGomRestante : 7 
+Obstacle  : 
+	     0
+	 1   2   1
+	     0
+
+	                   Vide           
+	 Mur              Pac-Man           Mur            
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(PACMAN     -- 80721664.6101) 	 PACMAN à été placé en (4,4) vers 500002 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 80721664.6101)
+Position  : tab[4][4]
+Direction : 500002 
+Delais : 300 
+score : 0 
+PacGomRestante : 7 
+Obstacle  : 
+	     0
+	 1   2   1
+	     0
+
+	                   Vide           
+	 Mur              Pac-Man           Mur            
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(EVENT      -- 72328960.6101) 	 - Flèche De haut !
+(PACMAN     -- 80721664.6101) 	 PACMAN à été placé en (3,4) vers 500000 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 80721664.6101)
+Position  : tab[3][4]
+Direction : 500000 
+Delais : 300 
+score : 0 
+PacGomRestante : 7 
+Obstacle  : 
+	     0
+	 3   2   0
+	     0
+
+	                   Vide           
+	 Pac-Gom          Pac-Man           Vide           
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(EVENT      -- 72328960.6101) 	 - Flèche gauche !
+
+(SIGINT     -- 80721664.6101) 	 Vous etez bien entrer dans le SIGINT PACMAN VA A GAUCHE
+(PACGOM     -- 89114368.6101) 	 La condition a été activée 
+(PACMAN     -- 80721664.6101) 	 PACMAN à été placé en (3,3) vers 500002 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 80721664.6101)
+Position  : tab[3][3]
+Direction : 500002 
+Delais : 300 
+score : 1 
+PacGomRestante : 6 
+Obstacle  : 
+	     1
+	 3   2   0
+	     1
+
+	                   Mur            
+	 Pac-Gom          Pac-Man           Vide           
+	                   Mur            
+
+
+ ---------------------------- -------------------------------------------- 
+
+(PACGOM     -- 89114368.6101) 	 La condition a été activée 
+(PACMAN     -- 80721664.6101) 	 PACMAN à été placé en (3,2) vers 500002 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 80721664.6101)
+Position  : tab[3][2]
+Direction : 500002 
+Delais : 300 
+score : 2 
+PacGomRestante : 5 
+Obstacle  : 
+	     1
+	 3   2   0
+	     1
+
+	                   Mur            
+	 Pac-Gom          Pac-Man           Vide           
+	                   Mur            
+
+
+ ---------------------------- -------------------------------------------- 
+
+(PACGOM     -- 89114368.6101) 	 La condition a été activée 
+(PACMAN     -- 80721664.6101) 	 PACMAN à été placé en (3,1) vers 500002 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 80721664.6101)
+Position  : tab[3][1]
+Direction : 500002 
+Delais : 300 
+score : 3 
+PacGomRestante : 4 
+Obstacle  : 
+	     3
+	 1   2   0
+	     3
+
+	                   Pac-Gom        
+	 Mur              Pac-Man           Vide           
+	                   Pac-Gom        
+
+
+ ---------------------------- -------------------------------------------- 
+
+(EVENT      -- 72328960.6101) 	 - Flèche De haut !
+(PACGOM     -- 89114368.6101) 	 La condition a été activée 
+(PACMAN     -- 80721664.6101) 	 PACMAN à été placé en (2,1) vers 500000 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 80721664.6101)
+Position  : tab[2][1]
+Direction : 500000 
+Delais : 300 
+score : 4 
+PacGomRestante : 3 
+Obstacle  : 
+	     3
+	 1   2   1
+	     0
+
+	                   Pac-Gom        
+	 Mur              Pac-Man           Mur            
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(PACGOM     -- 89114368.6101) 	 La condition a été activée 
+(PACMAN     -- 80721664.6101) 	 PACMAN à été placé en (1,1) vers 500000 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 80721664.6101)
+Position  : tab[1][1]
+Direction : 500000 
+Delais : 300 
+score : 5 
+PacGomRestante : 2 
+Obstacle  : 
+	     1
+	 1   2   3
+	     0
+
+	                   Mur            
+	 Mur              Pac-Man           Pac-Gom        
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(EVENT      -- 72328960.6101) 	 - Flèche droite !
+(PACGOM     -- 89114368.6101) 	 La condition a été activée 
+(PACMAN     -- 80721664.6101) 	 PACMAN à été placé en (1,2) vers 500003 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 80721664.6101)
+Position  : tab[1][2]
+Direction : 500003 
+Delais : 300 
+score : 6 
+PacGomRestante : 1 
+Obstacle  : 
+	     1
+	 0   2   3
+	     1
+
+	                   Mur            
+	 Vide             Pac-Man           Pac-Gom        
+	                   Mur            
+
+
+ ---------------------------- -------------------------------------------- 
+
+(PACGOM     -- 89114368.6101) 	 La condition a été activée 
+(PACMAN     -- 80721664.6101) 	 PACMAN à été placé en (1,3) vers 500003 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 80721664.6101)
+Position  : tab[1][3]
+Direction : 500003 
+Delais : 300 
+score : 7 
+PacGomRestante : 0 
+Obstacle  : 
+	     1
+	 0   2   0
+	     1
+
+	                   Mur            
+	 Vide             Pac-Man           Vide           
+	                   Mur            
+
+
+ ---------------------------- -------------------------------------------- 
+
+(PACGOM     -- 89114368.6101) 	 Toute les PACGOM on été récupéré 
+(PACGOM     -- 89114368.6101) 	 Nouveau délais : 150 
+(PACMAN     -- 80721664.6101) 	 PACMAN à été placé en (1,4) vers 500003 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 80721664.6101)
+Position  : tab[1][4]
+Direction : 500003 
+Delais : 150 
+score : 7 
+PacGomRestante : 0 
+Obstacle  : 
+	     1
+	 0   2   0
+	     0
+
+	                   Mur            
+	 Vide             Pac-Man           Vide           
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(PACGOM     -- 89114368.6101) 	 Je place la PACGOM EN tab[1][1] 
+(EVENT      -- 72328960.6101) 	 - Flèche gauche !
+
+(SIGINT     -- 80721664.6101) 	 Vous etez bien entrer dans le SIGINT PACMAN VA A GAUCHE
+(EVENT      -- 72328960.6101) 	 - Flèche gauche !
+
+(SIGINT     -- 80721664.6101) 	 Vous etez bien entrer dans le SIGINT PACMAN VA A GAUCHE
+(EVENT      -- 72328960.6101) 	 - Flèche gauche !
+
+(SIGINT     -- 80721664.6101) 	 Vous etez bien entrer dans le SIGINT PACMAN VA A GAUCHE
+(EVENT      -- 72328960.6101) 	 - Flèche gauche !
+
+(SIGINT     -- 80721664.6101) 	 Vous etez bien entrer dans le SIGINT PACMAN VA A GAUCHE
+(EVENT      -- 72328960.6101) 	 Clique sur le bouton Croix 
+(EVENT      -- 72328960.6101) 	 EVENT à bien quitté son Thread 
+(PRINCIPALE -- 154651520.6101) 	 Attente de 1500 millisecondes...
+(PRINCIPALE -- 154651520.6101) 	 Fermeture de la fenetre graphique...
+(PRINCIPALE -- 154651520.6101) 	 OK
+
+Script terminé sur 2025-03-07 16:57:52+01:00
