@@ -613,6 +613,12 @@ void* FctThreadEventSDL(void *p)
           case SDLK_SPACE : // Touche ESPACE enfoncee
                             maGrille.event.touche = KEY_SPACE;
                             break;
+          case SDLK_p : 
+                            maGrille.event.touche = KEY_P; //!Ajout par moi
+                            break;
+          case SDLK_m:
+                            maGrille.event.touche = KEY_M; //!Ajout par moi
+                            break;
 
           default : // Autre touche enfoncee
                     maGrille.event.touche = event.key.keysym.sym;

@@ -27,6 +27,8 @@ typedef struct
 #define KEY_UP      51
 #define KEY_LEFT    52
 #define KEY_RIGHT   53
+#define KEY_P       54   //!Ajout par moi
+#define KEY_M       55  //!Ajout par moi
 
 int OuvrirGrilleSDL(int nbLignes,int nbColonnes,int tailleCarre,const char* titreFenetre,const char* iconeFenetre);
 // nbLignes,nbColonnes = dimensions de la grille
