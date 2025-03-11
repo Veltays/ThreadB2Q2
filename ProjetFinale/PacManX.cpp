@@ -46,7 +46,7 @@ int C;              //! Position de pacman sur les colonnes
 int dir;            //! Direction
 int delais = 300;   //! Vitesse de PACMAN
 int nbPacGom = 0;   //! Nombre de PacGom et de SuperPACGOM présente dans la grille
-int NiveauJeu = 1;  //! Variable contenant le niveau du eu
+int NiveauJeu = 0;  //! Variable contenant le niveau du eu
 int score = 0;
 // Différent thread
 pthread_t ThreadPacMan; //! Handler du thread PACMAN (notre personnage)
@@ -144,9 +144,11 @@ int main(int argc, char *argv[])
    ? Création des différents thread
 
   */
-  pthread_create(&ThreadPacGom, NULL, (void *(*)(void *))FonctionPacGom, NULL);
-  pthread_create(&ThreadPacMan, NULL, (void *(*)(void *))FonctionPacMan, NULL);
-  pthread_create(&ThreadEvent, NULL, (void *(*)(void *))FonctionEvent, NULL);
+
+    pthread_create(&ThreadPacGom, NULL, (void *(*)(void *))FonctionPacGom, NULL);
+    pthread_create(&ThreadPacMan, NULL, (void *(*)(void *))FonctionPacMan, NULL);
+    pthread_create(&ThreadEvent, NULL, (void *(*)(void *))FonctionEvent, NULL);
+
 
   /*
    ? Attente de la morts des threads
@@ -281,63 +283,62 @@ const char *presence_nom(int presence)
   }
 }
 
-
 void PlacerPacGom()
 {
-    sigset_t masque, ancien_masque;
-    // Préparation du blocage des signaux de direction
-    sigemptyset(&masque);
-    sigaddset(&masque, SIGINT);
-    sigaddset(&masque, SIGHUP);
-    sigaddset(&masque, SIGUSR1);
-    sigaddset(&masque, SIGUSR2);
+  sigset_t masque, ancien_masque;
+  // Préparation du blocage des signaux de direction
+  sigemptyset(&masque);
+  sigaddset(&masque, SIGINT);
+  sigaddset(&masque, SIGHUP);
+  sigaddset(&masque, SIGUSR1);
+  sigaddset(&masque, SIGUSR2);
 
-    sigprocmask(SIG_BLOCK, &masque, &ancien_masque);
+  sigprocmask(SIG_BLOCK, &masque, &ancien_masque);
 
-    // int VecteurSuperPacGOM[4][2] = {{2, 1}, {2, 15}, {15, 1}, {15, 15}};
-    // pthread_mutex_lock(&mutexTab);
-    // for (int k = 0; k < 4; k++)
-    // {
-    //   fprintf(stderr, "(PACGOM     -- %u.%d) \t Je place la SUPERPACGOM EN tab[%d][%d] \n", pthread_self(), getpid(), VecteurSuperPacGOM[k][0], VecteurSuperPacGOM[k][1]);
-    //   setTab(VecteurSuperPacGOM[k][0], VecteurSuperPacGOM[k][1], SUPERPACGOM, pthread_self());
-    //   DessineSuperPacGom(VecteurSuperPacGOM[k][0], VecteurSuperPacGOM[k][1]);
+  int VecteurSuperPacGOM[4][2] = {{2, 1}, {2, 15}, {15, 1}, {15, 15}};
+  pthread_mutex_lock(&mutexTab);
+  for (int k = 0; k < 4; k++)
+  {
+    fprintf(stderr, "(PACGOM     -- %u.%d) \t Je place la SUPERPACGOM EN tab[%d][%d] \n", pthread_self(), getpid(), VecteurSuperPacGOM[k][0], VecteurSuperPacGOM[k][1]);
+    setTab(VecteurSuperPacGOM[k][0], VecteurSuperPacGOM[k][1], SUPERPACGOM, pthread_self());
+    DessineSuperPacGom(VecteurSuperPacGOM[k][0], VecteurSuperPacGOM[k][1]);
+    pthread_mutex_lock(&mutexNbPacGom);
+    nbPacGom++;
+    pthread_mutex_unlock(&mutexNbPacGom);
+  }
 
-    //   pthread_mutex_lock(&mutexNbPacGom);
-    //   nbPacGom++;
-    //   pthread_mutex_unlock(&mutexNbPacGom);
-    // }
-    // pthread_mutex_unlock(&mutexTab);
+  
+  pthread_mutex_unlock(&mutexTab);
+
+  pthread_mutex_lock(&mutexTab);
+  for (int i = 0; i < NB_LIGNE; i++)
+    for (int j = 0; j < NB_COLONNE; j++)
+      if (tab[i][j].presence == VIDE)
+      {
+        fprintf(stderr, "(PACGOM     -- %u.%d) \t Je place la PACGOM EN tab[%d][%d] \n", pthread_self(), getpid(), i, j);
+
+        setTab(i, j, PACGOM, pthread_self());
+        DessinePacGom(i, j);
+
+        pthread_mutex_lock(&mutexNbPacGom);
+        nbPacGom++;
+        pthread_mutex_unlock(&mutexNbPacGom);
+      }
+
+  pthread_mutex_unlock(&mutexTab);
+
+  if (nbPacGom != 0)
+  {
+    DessineChiffre(12, 24, (nbPacGom % 10));
+    DessineChiffre(12, 23, ((nbPacGom / 10) % 10));
+    DessineChiffre(12, 22, ((nbPacGom / 100) % 10));
+  }
+  else
+    DessineChiffre(12, 24, 0);
 
 
-    pthread_mutex_lock(&mutexTab);
-    for (int i = 0; i < NB_LIGNE/4; i++)
-      for (int j = 0; j < NB_COLONNE/4; j++)
-        if (tab[i][j].presence == VIDE)
-        {
-          fprintf(stderr, "(PACGOM     -- %u.%d) \t Je place la PACGOM EN tab[%d][%d] \n", pthread_self(), getpid(), i, j);
-
-          setTab(i, j, PACGOM, pthread_self());
-          DessinePacGom(i, j);
-    
-          pthread_mutex_lock(&mutexNbPacGom);
-          nbPacGom++;
-          pthread_mutex_unlock(&mutexNbPacGom);
-        }
-
-    pthread_mutex_unlock(&mutexTab);
-
-    if(nbPacGom != 0)
-    {
-      DessineChiffre(12, 24, (nbPacGom % 10));
-      DessineChiffre(12, 23, ((nbPacGom / 10) % 10));
-      DessineChiffre(12, 22, ((nbPacGom / 100) % 10));
-    }
-    else
-      DessineChiffre(12, 24, 0);
-    sigprocmask(SIG_SETMASK,&ancien_masque,NULL);
+  sigprocmask(SIG_SETMASK, &ancien_masque, NULL);
 }
-
-
 
 // ? **************************************************************************************************************
 // ? ***************************************FONCTION DE THREAD ****************************************************
@@ -600,7 +601,7 @@ void *FonctionPacMan()
 
 
       case BAS:
-        if (tab[L + 1][C].presence == PACGOM || tab[L + 1][C].presence == SUPERPACGOM)
+        if (tab[L + 1][C].presence == PACGOM )
         {
           pthread_mutex_lock(&mutexNbPacGom);
           nbPacGom--;
@@ -699,8 +700,6 @@ void *FonctionEvent()
 
 void *FonctionPacGom()
 {
-  while(true)
-  {
 
       // Mise en place des PACGOM ET SUPERPACGOM
 
@@ -710,47 +709,66 @@ void *FonctionPacGom()
 
       */
 
-      PlacerPacGom();
+     while(true)
+     {
 
-      while (nbPacGom > 0)
-      {
-        pthread_cond_wait(&condNbPacGom, &mutexNbPacGom);
-        fprintf(stderr, "(PACGOM     -- %u.%d) \t La condition a été activée \n", pthread_self(), getpid());
+        NiveauJeu++;
         pthread_mutex_lock(&mutexTab);
-        if(nbPacGom != 0)
+        DessineChiffre(14, 22, NiveauJeu);
+        pthread_mutex_unlock(&mutexTab);
+
+
+        PlacerPacGom();
+        
+        L = 15;
+        C = 8;
+        pthread_mutex_lock(&mutexDir);
+        dir = GAUCHE;
+        pthread_mutex_unlock(&mutexDir);
+
+        pthread_mutex_lock(&mutexTab);
+        setTab(L, C, PACMAN, pthread_self());
+        DessinePacMan(L, C, dir);
+        pthread_mutex_unlock(&mutexTab);
+        fprintf(stderr, "(PACMAN     -- %u.%d) \t PACMAN à été placé en (%d,%d) vers %d dans TAB \n", pthread_self(), getpid(), L, C, dir);
+
+        while (nbPacGom > 0)
         {
-          DessineChiffre(12, 24, (nbPacGom % 10));
-          DessineChiffre(12, 23, ((nbPacGom / 10) % 10));
-          DessineChiffre(12, 22, ((nbPacGom / 100) % 10));
+          pthread_mutex_lock(&mutexNbPacGom);
+          pthread_cond_wait(&condNbPacGom, &mutexNbPacGom);
+          fprintf(stderr, "(PACGOM     -- %u.%d) \t La condition a été activée \n", pthread_self(), getpid());
+          pthread_mutex_lock(&mutexTab);
+          if(nbPacGom != 0)
+          {
+            DessineChiffre(12, 24, (nbPacGom % 10));
+            DessineChiffre(12, 23, ((nbPacGom / 10) % 10));
+            DessineChiffre(12, 22, ((nbPacGom / 100) % 10));
+          }
+          else
+            DessineChiffre(12, 24, 0);
+
+          pthread_mutex_unlock(&mutexTab);
+          pthread_mutex_unlock(&mutexNbPacGom);
         }
-        else
-          DessineChiffre(12, 24, 0);
-         pthread_mutex_unlock(&mutexTab);
-      }
+        fprintf(stderr, "(PACGOM     -- %u.%d) \t Toute les PACGOM on été récupéré \n", pthread_self(), getpid());
+
+        pthread_mutex_lock(&mutexTab);
+        setTab(L, C, VIDE);
+        EffaceCarre(L,C);
+        pthread_mutex_unlock(&mutexTab);
+
+       
+        // On met un nouveau delais
+
+        pthread_mutex_lock(&mutexDelais);
+        delais /= 2;
+        fprintf(stderr, "(PACGOM     -- %u.%d) \t Nouveau délais : %d \n", pthread_self(), getpid(), delais);
+        pthread_mutex_unlock(&mutexDelais);
+
+     }
 
 
 
-      fprintf(stderr, "(PACGOM     -- %u.%d) \t Toute les PACGOM on été récupéré \n", pthread_self(), getpid());
-      NiveauJeu++;
-
-      pthread_mutex_lock(&mutexTab);
-      DessineChiffre(14, 22, NiveauJeu);
-      pthread_mutex_unlock(&mutexTab);
-
-      // On met un nouveau delais
-
-      pthread_mutex_lock(&mutexDelais);
-      delais /= 2;
-      fprintf(stderr, "(PACGOM     -- %u.%d) \t Nouveau délais : %d \n", pthread_self(), getpid(), delais);
-      pthread_mutex_unlock(&mutexDelais);
-  }
-
-  
-
-    
-
-
-    pthread_exit(NULL);
 }
 
 // ? **************************************************************************************************************
