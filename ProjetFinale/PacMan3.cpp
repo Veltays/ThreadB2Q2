@@ -48,30 +48,25 @@ int delais = 300;   //! Vitesse de PACMAN
 int nbPacGom = 0;   //! Nombre de PacGom et de SuperPACGOM présente dans la grille
 int NiveauJeu = 0;  //! Variable contenant le niveau du eu
 int score = 0;
-
-
 // Différent thread
 pthread_t ThreadPacMan; //! Handler du thread PACMAN (notre personnage)
 pthread_t ThreadEvent;  //! Handler du thread Event qui récupérera les different évenements
 pthread_t ThreadPacGom; //! Handler du thread PACGOM, qui se chargera de placé les PACGOM et d'incrémenter le niveau
-pthread_t ThreadScore;  //!Handler du thread Score, qui se chargera d'afficher le score
+
 
 // mutex
 pthread_mutex_t mutexTab;      //! Mutex pour éviter que plusieurs accède en même temp au tableau
 pthread_mutex_t mutexDir;      //! Mutex pour éviter que plusieurs thread change dir en meme temp
 pthread_mutex_t mutexNbPacGom; //! Mutex pour éviter que plusieurs thread incrémente/décremente la PacGom
 pthread_mutex_t mutexDelais;   //! Mutex pour éviter que le délais sois modifé par plusieurs thread
-pthread_mutex_t mutexScore;    //! Mutex pour éviter que le score sois modifier a plusieurs thread
 // condition
 
 pthread_cond_t condNbPacGom;
-pthread_cond_t condScore;
 
 // Fonction Thread
 void *FonctionPacMan();
 void *FonctionEvent();
 void *FonctionPacGom();
-void *FonctionScore();
 
 //Fonction Signaux
 void HandlerSIGINT(int sig);  // <- gauche
@@ -142,10 +137,9 @@ int main(int argc, char *argv[])
   pthread_mutex_init(&mutexDir, NULL);
   pthread_mutex_init(&mutexNbPacGom, NULL);
   pthread_mutex_init(&mutexDelais, NULL);
-  pthread_mutex_init(&mutexScore,NULL);
+
 
   pthread_cond_init(&condNbPacGom, NULL);
-  pthread_cond_init(&condScore,NULL);
 
   /*
    ? Création des différents thread
@@ -155,7 +149,7 @@ int main(int argc, char *argv[])
     pthread_create(&ThreadPacGom, NULL, (void *(*)(void *))FonctionPacGom, NULL);
     pthread_create(&ThreadPacMan, NULL, (void *(*)(void *))FonctionPacMan, NULL);
     pthread_create(&ThreadEvent, NULL, (void *(*)(void *))FonctionEvent, NULL);
-    pthread_create(&ThreadScore, NULL, (void *(*)(void *))FonctionScore, NULL);
+
 
   /*
    ? Attente de la morts des threads
@@ -779,21 +773,6 @@ void *FonctionPacGom()
 
 }
 
-
-void *FonctionScore()
-{
-  fprintf(stderr,"(SCORE      -- %u.%d) \t Vous etez bien rentrés dans le Thread score\n",pthread_self(), getpid());
-
-          while (true)
-        {
-          pthread_cond_wait(&condScore, &mutexNbPacGom);
-          pthread_mutex_lock(&mutexNbPacGom);
-
-          fprintf(stderr,"Le score a bien été incrémenté");
-
-        }
-  pthread_exit(NULL);
-}
 // ? **************************************************************************************************************
 // ? *************************************** SIGNAUX **************************************************************
 // ? **************************************************************************************************************
