@@ -132,6 +132,15 @@ int main(int argc, char *argv[])
   */
     DessineChiffre(14, 22, NiveauJeu);
 
+    DessineChiffre(16, 22, score);
+    DessineChiffre(16, 23, score);
+    DessineChiffre(16, 24, score);
+    DessineChiffre(16, 25, score);
+
+    DessineChiffre(12, 22, nbPacGom);
+    DessineChiffre(12, 23, nbPacGom);
+    DessineChiffre(12, 24, nbPacGom);
+
 
 
   /*
@@ -835,10 +844,6 @@ void *FonctionScore()
           DessineChiffre(16, 24, (score / 10 % 10));
           DessineChiffre(16, 23, (score / 100 % 10));
           DessineChiffre(16, 22, (score / 1000 % 10));
-        }
-        else
-        {
-            DessineChiffre(16, 22, 0);
         }
 
         MAJScore = false;  // Réinitialisation de la variable
