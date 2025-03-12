@@ -48,7 +48,7 @@ int delais = 300;   //! Vitesse de PACMAN
 int nbPacGom = 0;   //! Nombre de PacGom et de SuperPACGOM présente dans la grille
 int NiveauJeu = 0;  //! Variable contenant le niveau du eu
 int score = 0;
-
+bool MAJScore = false;
 
 // Différent thread
 pthread_t ThreadPacMan; //! Handler du thread PACMAN (notre personnage)
@@ -528,9 +528,14 @@ void *FonctionPacMan()
           pthread_mutex_lock(&mutexNbPacGom);
           nbPacGom--;
           pthread_mutex_unlock(&mutexNbPacGom);
-          
-          score +=1;
           pthread_cond_signal(&condNbPacGom);
+
+
+          pthread_mutex_lock(&mutexScore);
+          score +=1;
+          MAJScore = true;
+          pthread_cond_signal(&condScore);
+          pthread_mutex_unlock(&mutexScore);
         }
 
         if(tab[L][C - 1].presence == SUPERPACGOM)
@@ -538,9 +543,12 @@ void *FonctionPacMan()
           pthread_mutex_lock(&mutexNbPacGom);
           nbPacGom--;
           pthread_mutex_unlock(&mutexNbPacGom);
-
-          score +=5;
           pthread_cond_signal(&condNbPacGom);
+
+          pthread_mutex_lock(&mutexScore);
+          score +=5;
+          MAJScore = true;
+          pthread_mutex_unlock(&mutexScore);
         }
 
         if (tab[L][C - 1].presence != MUR)
@@ -555,10 +563,14 @@ void *FonctionPacMan()
           pthread_mutex_lock(&mutexNbPacGom);
           nbPacGom--;
           pthread_mutex_unlock(&mutexNbPacGom);
-
-          score +=1;
-
           pthread_cond_signal(&condNbPacGom);
+
+          pthread_mutex_lock(&mutexScore);
+          score +=1;
+          MAJScore = true;
+          pthread_cond_signal(&condScore);
+          pthread_mutex_unlock(&mutexScore);
+
         }
 
 
@@ -567,9 +579,13 @@ void *FonctionPacMan()
           pthread_mutex_lock(&mutexNbPacGom);
           nbPacGom--;
           pthread_mutex_unlock(&mutexNbPacGom);
-
-          score +=5;
           pthread_cond_signal(&condNbPacGom);
+
+          pthread_mutex_lock(&mutexScore);
+          score +=5;
+          MAJScore = true;
+          pthread_cond_signal(&condScore);
+          pthread_mutex_unlock(&mutexScore);
         }
 
 
@@ -585,8 +601,13 @@ void *FonctionPacMan()
           pthread_mutex_lock(&mutexNbPacGom);
           nbPacGom--;
           pthread_mutex_unlock(&mutexNbPacGom);
-          score +=1;
           pthread_cond_signal(&condNbPacGom);
+          
+          pthread_mutex_lock(&mutexScore);
+          score +=1;
+          MAJScore = true;
+          pthread_cond_signal(&condScore);
+          pthread_mutex_unlock(&mutexScore);
         }
 
 
@@ -595,9 +616,13 @@ void *FonctionPacMan()
           pthread_mutex_lock(&mutexNbPacGom);
           nbPacGom--;
           pthread_mutex_unlock(&mutexNbPacGom);
-
-          score +=5;
           pthread_cond_signal(&condNbPacGom);
+
+          pthread_mutex_lock(&mutexScore);
+          score +=5;
+          MAJScore = true;
+          pthread_cond_signal(&condScore);
+          pthread_mutex_unlock(&mutexScore);
         }
 
 
@@ -613,9 +638,13 @@ void *FonctionPacMan()
           pthread_mutex_lock(&mutexNbPacGom);
           nbPacGom--;
           pthread_mutex_unlock(&mutexNbPacGom);
-
-          score +=1;
           pthread_cond_signal(&condNbPacGom);
+
+          pthread_mutex_lock(&mutexScore);
+          score +=1;
+          MAJScore = true;
+          pthread_cond_signal(&condScore);
+          pthread_mutex_unlock(&mutexScore);
         }
 
 
@@ -624,15 +653,20 @@ void *FonctionPacMan()
           pthread_mutex_lock(&mutexNbPacGom);
           nbPacGom--;
           pthread_mutex_unlock(&mutexNbPacGom);
-
-          score +=5;
           pthread_cond_signal(&condNbPacGom);
+
+          pthread_mutex_lock(&mutexScore);
+          score +=5;
+          MAJScore = true;
+          pthread_cond_signal(&condScore);
+          pthread_mutex_unlock(&mutexScore);
         }
 
         if (tab[L + 1][C].presence != MUR)
           L++;
         break;
       }
+
 
     sigprocmask(SIG_BLOCK, &masque, &ancien_masque);
 
@@ -757,6 +791,7 @@ void *FonctionPacGom()
 
           pthread_mutex_unlock(&mutexTab);
           pthread_mutex_unlock(&mutexNbPacGom);
+          fprintf(stderr, "(PACGOM     -- %u.%d) \t FIn de la condition \n", pthread_self(), getpid());
         }
         fprintf(stderr, "(PACGOM     -- %u.%d) \t Toute les PACGOM on été récupéré \n", pthread_self(), getpid());
 
@@ -779,21 +814,43 @@ void *FonctionPacGom()
 
 }
 
-
 void *FonctionScore()
 {
-  fprintf(stderr,"(SCORE      -- %u.%d) \t Vous etez bien rentrés dans le Thread score\n",pthread_self(), getpid());
+    fprintf(stderr, "(SCORE      -- %u.%d) \t Vous êtes bien rentrés dans le Thread score\n", pthread_self(), getpid());
 
-          while (true)
+    while (true)
+    {
+        pthread_mutex_lock(&mutexScore);  // Verrouille le mutex avant d'attendre
+        fprintf(stderr, "(SCORE      -- %u.%d) \t Attente d'une Mise à jour du score\n", pthread_self(), getpid());
+        while (MAJScore == false)
         {
-          pthread_cond_wait(&condScore, &mutexNbPacGom);
-          pthread_mutex_lock(&mutexNbPacGom);
-
-          fprintf(stderr,"Le score a bien été incrémenté");
-
+            pthread_cond_wait(&condScore, &mutexScore); // Attend la mise à jour du score
         }
-  pthread_exit(NULL);
+        
+        fprintf(stderr, "(SCORE      -- %u.%d) \t Une Mise a jour a été effectué\n", pthread_self(), getpid());
+        //Affichage du score
+        if(score != 0)
+        {
+          DessineChiffre(16, 25, (score % 10));
+          DessineChiffre(16, 24, (score / 10 % 10));
+          DessineChiffre(16, 23, (score / 100 % 10));
+          DessineChiffre(16, 22, (score / 1000 % 10));
+        }
+        else
+        {
+            DessineChiffre(16, 22, 0);
+        }
+
+        MAJScore = false;  // Réinitialisation de la variable
+        pthread_mutex_unlock(&mutexScore); // Déverrouille après modification
+    }
+
+    fprintf(stderr, "Le score a bien été incrémenté\n");
+
+    pthread_exit(NULL);
 }
+
+
 // ? **************************************************************************************************************
 // ? *************************************** SIGNAUX **************************************************************
 // ? **************************************************************************************************************
