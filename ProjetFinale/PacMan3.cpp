@@ -769,7 +769,7 @@ void *FonctionPacGom()
 
      }
 
-
+  pthread_exit(NULL)
 
 }
 

@@ -41,13 +41,15 @@ typedef struct
 S_CASE tab[NB_LIGNE][NB_COLONNE];
 
 // Variable Globale utile
-int L;              //! Position de pacman sur les lignes
-int C;              //! Position de pacman sur les colonnes
-int dir;            //! Direction
-int delais = 300;   //! Vitesse de PACMAN
-int nbPacGom = 0;   //! Nombre de PacGom et de SuperPACGOM présente dans la grille
-int NiveauJeu = 0;  //! Variable contenant le niveau du eu
-int score = 0;
+bool gameRunning = true;
+
+int L = 15;           //! Position de pacman sur les lignes
+int C = 8;            //! Position de pacman sur les colonnes
+int dir = GAUCHE;     //! Direction
+int delais = 300;     //! Vitesse de PACMAN
+int nbPacGom = 0;     //! Nombre de PacGom et de SuperPACGOM présente dans la grille
+int NiveauJeu = 0;    //! Variable contenant le niveau du eu
+int score = 0;     
 bool MAJScore = false;
 
 // Différent thread
@@ -86,6 +88,10 @@ void setTab(int l, int c, int presence = VIDE, pthread_t tid = 0);
 
 void PacInfo();
 const char *presence_nom(int);
+const char * posiPac(int);
+
+void MangerPacGom(int);
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 int main(int argc, char *argv[])
@@ -100,7 +106,7 @@ int main(int argc, char *argv[])
 
   { // Ouverture de la fenetre graphique
 
-    fprintf(stderr, "(PRINCIPALE -- %u.%d) \t Ouverture de la fenetre graphique\n", pthread_self(), getpid());
+    fprintf(stderr, "(PRINCIPALE -- %lu.%d) \t Ouverture de la fenetre graphique\n", pthread_self(), getpid());
     fflush(stdout);
     if (OuvertureFenetreGraphique() < 0)
     {
@@ -126,9 +132,6 @@ int main(int argc, char *argv[])
   // ? **************************************************************************************************************
   /*
    ? Mettre en place les données
-    DessineChiffre(14, 25, 9);
-
-
   */
     DessineChiffre(14, 22, NiveauJeu);
 
@@ -176,15 +179,15 @@ int main(int argc, char *argv[])
 
   /*Fin du programme*/
 
-  fprintf(stderr, "(PRINCIPALE -- %u.%d) \t Attente de 1500 millisecondes...\n", pthread_self(), getpid());
+  fprintf(stderr, "(PRINCIPALE -- %lu.%d) \t Attente de 1500 millisecondes...\n", pthread_self(), getpid());
   //Attente(1500);
   // -------------------------------------------------------------------------
 
   // Fermeture de la fenetre
-  fprintf(stderr, "(PRINCIPALE -- %u.%d) \t Fermeture de la fenetre graphique...\n", pthread_self(), getpid());
+  fprintf(stderr, "(PRINCIPALE -- %lu.%d) \t Fermeture de la fenetre graphique...\n", pthread_self(), getpid());
   fflush(stdout);
   FermetureFenetreGraphique();
-  fprintf(stderr, "(PRINCIPALE -- %u.%d) \t OK\n", pthread_self(), getpid());
+  fprintf(stderr, "(PRINCIPALE -- %lu.%d) \t OK\n", pthread_self(), getpid());
   fflush(stdout);
 
   exit(0);
@@ -254,9 +257,9 @@ void DessineGrilleBase()
 void PacInfo()
 {
   fprintf(stderr, "\n\n ---------------------------- PAC INFO ----------------------------------- \n");
-  fprintf(stderr, "(PACMAN     -- %u.%d)\n", pthread_self(), getpid());
+  fprintf(stderr, "(PACMAN     -- %lu.%d)\n", pthread_self(), getpid());
   fprintf(stderr, "Position  : tab[%d][%d]\n", L, C);
-  fprintf(stderr, "Direction : %d \n", dir);
+  fprintf(stderr, "Direction : %s \n", posiPac(dir));
   fprintf(stderr, "Delais : %d \n", delais);
   fprintf(stderr, "score : %d \n", score);
   fprintf(stderr, "PacGomRestante : %d \n", nbPacGom);
@@ -299,6 +302,24 @@ const char *presence_nom(int presence)
   }
 }
 
+const char *posiPac(int direction)
+{
+  switch (direction)
+  {
+  case GAUCHE:
+    return "Gauche";
+  case DROITE:
+    return "Droite";
+  case HAUT:
+    return "Haut";
+  case BAS:
+    return "Bas";
+ 
+  default:
+    return "Inconnu";
+  }
+}
+
 void PlacerPacGom()
 {
   sigset_t masque, ancien_masque;
@@ -315,7 +336,7 @@ void PlacerPacGom()
   pthread_mutex_lock(&mutexTab);
   for (int k = 0; k < 4; k++)
   {
-    fprintf(stderr, "(PACGOM     -- %u.%d) \t Je place la SUPERPACGOM EN tab[%d][%d] \n", pthread_self(), getpid(), VecteurSuperPacGOM[k][0], VecteurSuperPacGOM[k][1]);
+    fprintf(stderr, "(PACGOM     -- %lu.%d) \t Je place la SUPERPACGOM EN tab[%d][%d] \n", pthread_self(), getpid(), VecteurSuperPacGOM[k][0], VecteurSuperPacGOM[k][1]);
     setTab(VecteurSuperPacGOM[k][0], VecteurSuperPacGOM[k][1], SUPERPACGOM, pthread_self());
     DessineSuperPacGom(VecteurSuperPacGOM[k][0], VecteurSuperPacGOM[k][1]);
     pthread_mutex_lock(&mutexNbPacGom);
@@ -331,7 +352,7 @@ void PlacerPacGom()
     for (int j = 0; j < NB_COLONNE; j++)
       if (tab[i][j].presence == VIDE)
       {
-        fprintf(stderr, "(PACGOM     -- %u.%d) \t Je place la PACGOM EN tab[%d][%d] \n", pthread_self(), getpid(), i, j);
+        fprintf(stderr, "(PACGOM     -- %lu.%d) \t Je place la PACGOM EN tab[%d][%d] \n", pthread_self(), getpid(), i, j);
 
         setTab(i, j, PACGOM, pthread_self());
         DessinePacGom(i, j);
@@ -356,6 +377,41 @@ void PlacerPacGom()
   sigprocmask(SIG_SETMASK, &ancien_masque, NULL);
 }
 
+
+
+void MangerPacGom(int Type)
+{
+  if(Type == PACGOM)
+  {
+    fprintf(stderr, "(PACMAN     -- %lu.%d) \t PACMAN vient de mangé une PACGOM \n", pthread_self(), getpid());
+    pthread_mutex_lock(&mutexNbPacGom);
+    nbPacGom--;
+    pthread_cond_signal(&condNbPacGom);
+    pthread_mutex_unlock(&mutexNbPacGom);
+
+
+    pthread_mutex_lock(&mutexScore);
+    score +=1;
+    MAJScore = true;
+    pthread_cond_signal(&condScore);
+    pthread_mutex_unlock(&mutexScore);
+  }
+
+  if(Type == SUPERPACGOM)
+  {
+    fprintf(stderr, "(PACMAN     -- %lu.%d) \t PACMAN vient de mangé une SUPERPACGOM \n", pthread_self(), getpid());
+    pthread_mutex_lock(&mutexNbPacGom);
+    nbPacGom--;
+    pthread_cond_signal(&condNbPacGom);
+    pthread_mutex_unlock(&mutexNbPacGom);
+
+    pthread_mutex_lock(&mutexScore);
+    score += 5;
+    MAJScore = true;
+    pthread_cond_signal(&condScore);
+    pthread_mutex_unlock(&mutexScore);
+  }
+}
 // ? **************************************************************************************************************
 // ? ***************************************FONCTION DE THREAD ****************************************************
 // ? **************************************************************************************************************
@@ -363,10 +419,10 @@ void PlacerPacGom()
 void *FonctionPacMan()
 {
 
-  { // Armement des signaux
+  { // Armement des signaux SIGINT, SIGHUP, SIGUSR1, SIGUSR2
 
     /*
-    ? Armement du signal SIGINT
+    ? Armement des signaux
 
       - Création d'une structure de type sigaction.
       - Association de la structure avec le Handler(Fonction à exécuter) SIGINT.
@@ -382,20 +438,12 @@ void *FonctionPacMan()
 
     if ((sigaction(SIGINT, &LEFT, NULL)) == -1)
     {
-      fprintf(stderr, "(PACMAN     -- %u.%d) \t ERREUR lors de l'Armenent du SIGINT  \n", pthread_self(), getpid());
+      fprintf(stderr, "(PACMAN     -- %lu.%d) \t ERREUR lors de l'Armenent du SIGINT  \n", pthread_self(), getpid());
       exit(1);
     }
-    fprintf(stderr, "(PACMAN     -- %u.%d) \t Armenent du SIGINT s'est déroulé sans soucis \n", pthread_self(), getpid());
+    fprintf(stderr, "(PACMAN     -- %lu.%d) \t Armenent du SIGINT s'est déroulé sans soucis \n", pthread_self(), getpid());
 
-    /*
-    ? Armement du signal SIGHUP
 
-      - Création d'une structure de type sigaction.
-      - Association de la structure avec le Handler(Fonction à exécuter) SIGHUP.
-      - On vide le set de la structure, permettant ainsi la réception de tous les signaux dans le handler.
-      - On n'active aucune option particulière lors de la réception d'un signal.
-      - On lie notre signal à notre structure sigaction.
-  */
 
     struct sigaction RIGHT;
     RIGHT.sa_handler = HandlerSIGHUP;
@@ -404,20 +452,11 @@ void *FonctionPacMan()
 
     if ((sigaction(SIGHUP, &RIGHT, NULL)) == -1)
     {
-      fprintf(stderr, "(PACMAN     -- %u.%d) \t ERREUR lors de l'Armenent du SIGHUP  \n", pthread_self(), getpid());
+      fprintf(stderr, "(PACMAN     -- %lu.%d) \t ERREUR lors de l'Armenent du SIGHUP  \n", pthread_self(), getpid());
       exit(1);
     }
-    fprintf(stderr, "(PACMAN     -- %u.%d) \t Armenent du SIGHUP s'est déroulé sans soucis \n", pthread_self(), getpid());
+    fprintf(stderr, "(PACMAN     -- %lu.%d) \t Armenent du SIGHUP s'est déroulé sans soucis \n", pthread_self(), getpid());
 
-    /*
-    ? Armement du signal SIGUSR1
-
-      - Création d'une structure de type sigaction.
-      - Association de la structure avec le Handler(Fonction à exécuter) SIGUSR1.
-      - On vide le set de la structure, permettant ainsi la réception de tous les signaux dans le handler.
-      - On n'active aucune option particulière lors de la réception d'un signal.
-      - On lie notre signal à notre structure sigaction.
-  */
 
     struct sigaction UP;
     UP.sa_handler = HandlerSIGUSR1;
@@ -426,20 +465,12 @@ void *FonctionPacMan()
 
     if ((sigaction(SIGUSR1, &UP, NULL)) == -1)
     {
-      fprintf(stderr, "(PACMAN     -- %u.%d) \t ERREUR lors de l'Armenent du SIGUSR1  \n", pthread_self(), getpid());
+      fprintf(stderr, "(PACMAN     -- %lu.%d) \t ERREUR lors de l'Armenent du SIGUSR1  \n", pthread_self(), getpid());
       exit(1);
     }
-    fprintf(stderr, "(PACMAN     -- %u.%d) \t Armenent du SIGUSR1 s'est déroulé sans soucis \n", pthread_self(), getpid());
+    fprintf(stderr, "(PACMAN     -- %lu.%d) \t Armenent du SIGUSR1 s'est déroulé sans soucis \n", pthread_self(), getpid());
 
-    /*
-    ? Armement du signal SIGUSR2
 
-      - Création d'une structure de type sigaction.
-      - Association de la structure avec le Handler(Fonction à exécuter) SIGUSR2.
-      - On vide le set de la structure, permettant ainsi la réception de tous les signaux dans le handler.
-      - On n'active aucune option particulière lors de la réception d'un signal.
-      - On lie notre signal à notre structure sigaction.
-  */
 
     struct sigaction DOWN;
     DOWN.sa_handler = HandlerSIGUSR2;
@@ -448,13 +479,15 @@ void *FonctionPacMan()
 
     if ((sigaction(SIGUSR2, &DOWN, NULL)) == -1)
     {
-      fprintf(stderr, "(PACMAN     -- %u.%d) \t ERREUR lors de l'Armenent du SIGUSR2  \n", pthread_self(), getpid());
+      fprintf(stderr, "(PACMAN     -- %lu.%d) \t ERREUR lors de l'Armenent du SIGUSR2  \n", pthread_self(), getpid());
       exit(1);
     }
-    fprintf(stderr, "(PACMAN     -- %u.%d) \t Armenent du SIGUSR2 s'est déroulé sans soucis \n", pthread_self(), getpid());
+    fprintf(stderr, "(PACMAN     -- %lu.%d) \t Armenent du SIGUSR2 s'est déroulé sans soucis \n", pthread_self(), getpid());
   }
+
+
+  // On prépare un masque pour bloqué les signaux de directions pendant un certain temp
   sigset_t masque, ancien_masque;
-  // Préparation du blocage des signaux de direction
   sigemptyset(&masque);
   sigaddset(&masque, SIGINT);
   sigaddset(&masque, SIGHUP);
@@ -467,23 +500,19 @@ void *FonctionPacMan()
       *On commence en 15,8 Position gauche
          ! On lock le mutex
       * on met a la case 15,8 qu'il y a un PACMAN avec notre threadId
-         ! on unlock le mutec
+         ! on unlock le mutex
       * On Dessine PACMAN a la case et a la directions désiré 
   */
-  fprintf(stderr, "(PACMAN     -- %u.%d) \t PACMAN est bien rentré dans son thread. \n", pthread_self(), getpid());
-  L = 15;
-  C = 8;
+  fprintf(stderr, "(PACMAN     -- %lu.%d) \t PACMAN est bien rentré dans son thread. \n", pthread_self(), getpid());
+
   pthread_mutex_lock(&mutexDir);
-  dir = GAUCHE;
   pthread_mutex_lock(&mutexTab);
-
-
   setTab(L, C, PACMAN, pthread_self());
-  nbPacGom--;
   DessinePacMan(L, C, dir);
   pthread_mutex_unlock(&mutexTab);
+
   pthread_mutex_unlock(&mutexDir);
-  fprintf(stderr, "(PACMAN     -- %u.%d) \t PACMAN à été placé en (%d,%d) vers %d dans TAB \n", pthread_self(), getpid(), L, C, dir);
+  fprintf(stderr, "(PACMAN     -- %lu.%d) \t PACMAN à été placé en (%d,%d) vers %d dans TAB \n", pthread_self(), getpid(), L, C, dir);
 
   /*
     ? Boucle d'avance automatique
@@ -502,9 +531,9 @@ void *FonctionPacMan()
       Et on recommence..
   */
 
-  fprintf(stderr, "(PACMAN     -- %u.%d) \t PACMAN rentre dans la boucle d'avance auto. \n", pthread_self(), getpid());
+  fprintf(stderr, "(PACMAN     -- %lu.%d) \t PACMAN rentre dans la boucle d'avance auto. \n", pthread_self(), getpid());
 
-  while (1)
+  while (gameRunning)
   {
     PacInfo();
 
@@ -517,9 +546,8 @@ void *FonctionPacMan()
     sigprocmask(SIG_SETMASK, &ancien_masque, NULL);
 
 
-
     pthread_mutex_lock(&mutexTab);
-    setTab(L, C);
+    setTab(L, C,VIDE);
     EffaceCarre(L, C);
     pthread_mutex_unlock(&mutexTab);
 
@@ -532,170 +560,89 @@ void *FonctionPacMan()
       switch (dir)
       {
       case GAUCHE:
-        if (tab[L][C - 1].presence == PACGOM)
-        {
-          pthread_mutex_lock(&mutexNbPacGom);
-          nbPacGom--;
-          pthread_mutex_unlock(&mutexNbPacGom);
-          pthread_cond_signal(&condNbPacGom);
-
-
-          pthread_mutex_lock(&mutexScore);
-          score +=1;
-          MAJScore = true;
-          pthread_cond_signal(&condScore);
-          pthread_mutex_unlock(&mutexScore);
-        }
-
-        if(tab[L][C - 1].presence == SUPERPACGOM)
-        {
-          pthread_mutex_lock(&mutexNbPacGom);
-          nbPacGom--;
-          pthread_mutex_unlock(&mutexNbPacGom);
-          pthread_cond_signal(&condNbPacGom);
-
-          pthread_mutex_lock(&mutexScore);
-          score +=5;
-          MAJScore = true;
-          pthread_mutex_unlock(&mutexScore);
-        }
-
         if (tab[L][C - 1].presence != MUR)
+        {
+          switch (tab[L][C - 1].presence)
+          {
+          case PACGOM:
+            MangerPacGom(PACGOM);
+            break;
+          case SUPERPACGOM:
+            MangerPacGom(SUPERPACGOM);
+            break;
+          }
           C--;
+        }
         break;
-
 
 
       case DROITE:
-        if (tab[L][C + 1].presence == PACGOM )
-        {
-          pthread_mutex_lock(&mutexNbPacGom);
-          nbPacGom--;
-          pthread_mutex_unlock(&mutexNbPacGom);
-          pthread_cond_signal(&condNbPacGom);
-
-          pthread_mutex_lock(&mutexScore);
-          score +=1;
-          MAJScore = true;
-          pthread_cond_signal(&condScore);
-          pthread_mutex_unlock(&mutexScore);
-
-        }
-
-
-        if(tab[L][C + 1].presence == SUPERPACGOM)
-        {
-          pthread_mutex_lock(&mutexNbPacGom);
-          nbPacGom--;
-          pthread_mutex_unlock(&mutexNbPacGom);
-          pthread_cond_signal(&condNbPacGom);
-
-          pthread_mutex_lock(&mutexScore);
-          score +=5;
-          MAJScore = true;
-          pthread_cond_signal(&condScore);
-          pthread_mutex_unlock(&mutexScore);
-        }
-
-
         if (tab[L][C + 1].presence != MUR)
+        {
+          switch (tab[L][C + 1].presence)
+          {
+          case PACGOM:
+            MangerPacGom(PACGOM);
+            break;
+          case SUPERPACGOM:
+            MangerPacGom(SUPERPACGOM);
+            break;
+          }
           C++;
+        }
         break;
-
 
 
       case HAUT:
-        if (tab[L - 1][C].presence == PACGOM)
-        {
-          pthread_mutex_lock(&mutexNbPacGom);
-          nbPacGom--;
-          pthread_mutex_unlock(&mutexNbPacGom);
-          pthread_cond_signal(&condNbPacGom);
-          
-          pthread_mutex_lock(&mutexScore);
-          score +=1;
-          MAJScore = true;
-          pthread_cond_signal(&condScore);
-          pthread_mutex_unlock(&mutexScore);
-        }
-
-
-        if(tab[L-1][C].presence == SUPERPACGOM)
-        {
-          pthread_mutex_lock(&mutexNbPacGom);
-          nbPacGom--;
-          pthread_mutex_unlock(&mutexNbPacGom);
-          pthread_cond_signal(&condNbPacGom);
-
-          pthread_mutex_lock(&mutexScore);
-          score +=5;
-          MAJScore = true;
-          pthread_cond_signal(&condScore);
-          pthread_mutex_unlock(&mutexScore);
-        }
-
-
         if (tab[L - 1][C].presence != MUR)
+        {
+          switch (tab[L-1][C].presence)
+          {
+          case PACGOM:
+            MangerPacGom(PACGOM);
+            break;
+          case SUPERPACGOM:
+            MangerPacGom(SUPERPACGOM);
+            break;
+          }
           L--;
+        }
         break;
-
 
 
       case BAS:
-        if (tab[L + 1][C].presence == PACGOM )
-        {
-          pthread_mutex_lock(&mutexNbPacGom);
-          nbPacGom--;
-          pthread_mutex_unlock(&mutexNbPacGom);
-          pthread_cond_signal(&condNbPacGom);
-
-          pthread_mutex_lock(&mutexScore);
-          score +=1;
-          MAJScore = true;
-          pthread_cond_signal(&condScore);
-          pthread_mutex_unlock(&mutexScore);
-        }
-
-
-        if(tab[L+1][C].presence == SUPERPACGOM)
-        {
-          pthread_mutex_lock(&mutexNbPacGom);
-          nbPacGom--;
-          pthread_mutex_unlock(&mutexNbPacGom);
-          pthread_cond_signal(&condNbPacGom);
-
-          pthread_mutex_lock(&mutexScore);
-          score +=5;
-          MAJScore = true;
-          pthread_cond_signal(&condScore);
-          pthread_mutex_unlock(&mutexScore);
-        }
-
         if (tab[L + 1][C].presence != MUR)
+        {
+          switch (tab[L+1][C ].presence)
+          {
+          case PACGOM:
+            MangerPacGom(PACGOM);
+            break;
+          case SUPERPACGOM:
+            MangerPacGom(SUPERPACGOM);
+            break;
+          }
           L++;
+        }
         break;
       }
-
-
-    sigprocmask(SIG_BLOCK, &masque, &ancien_masque);
 
     pthread_mutex_lock(&mutexTab);
     setTab(L, C, PACMAN, pthread_self());
     DessinePacMan(L, C, dir);
     pthread_mutex_unlock(&mutexTab);
 
-    sigprocmask(SIG_SETMASK, &ancien_masque, NULL);
 
-    fprintf(stderr, "(PACMAN     -- %u.%d) \t PACMAN à été placé en (%d,%d) vers %d dans TAB \n", pthread_self(), getpid(), L, C, dir);
-
+    fprintf(stderr, "(PACMAN     -- %lu.%d) \t PACMAN à été placé en (%d,%d) vers %d dans TAB \n", pthread_self(), getpid(), L, C, dir);
   }
-  fprintf(stderr, "(PACMAN     -- %u.%d) \t PACMAN à bien quitté son Thread. \n", pthread_self(), getpid());
+
+  fprintf(stderr, "(PACMAN     -- %lu.%d) \t PACMAN à bien quitté son Thread. \n", pthread_self(), getpid());
   pthread_exit(NULL);
 }
 
 void *FonctionEvent()
 {
-  fprintf(stderr, "(EVENT      -- %u.%d) \t EVENT est bien rentré dans son Thread\n", pthread_self(), getpid());
+  fprintf(stderr, "(EVENT      -- %lu.%d) \t EVENT est bien rentré dans son Thread\n", pthread_self(), getpid());
   char ok;
   EVENT_GRILLE_SDL event;
 
@@ -713,29 +660,29 @@ void *FonctionEvent()
         ok = 1;
         break;
       case KEY_RIGHT:
-        fprintf(stderr, "(EVENT      -- %u.%d) \t - Flèche droite !\n", pthread_self(), getpid());
+        fprintf(stderr, "(EVENT      -- %lu.%d) \t - Flèche droite !\n", pthread_self(), getpid());
         pthread_kill(ThreadPacMan, SIGHUP);
         break;
       case KEY_LEFT:
-        fprintf(stderr, "(EVENT      -- %u.%d) \t - Flèche gauche !\n", pthread_self(), getpid());
+        fprintf(stderr, "(EVENT      -- %lu.%d) \t - Flèche gauche !\n", pthread_self(), getpid());
         pthread_kill(ThreadPacMan, SIGINT);
         break;
       case KEY_UP:
-        fprintf(stderr, "(EVENT      -- %u.%d) \t - Flèche De haut !\n", pthread_self(), getpid());
+        fprintf(stderr, "(EVENT      -- %lu.%d) \t - Flèche De haut !\n", pthread_self(), getpid());
         pthread_kill(ThreadPacMan, SIGUSR1);
         break;
       case KEY_DOWN:
-        fprintf(stderr, "(EVENT      -- %u.%d) \t - Flèche De bas !\n", pthread_self(), getpid());
+        fprintf(stderr, "(EVENT      -- %lu.%d) \t - Flèche De bas !\n", pthread_self(), getpid());
         pthread_kill(ThreadPacMan, SIGUSR2);
         break;
       case KEY_P:
-        fprintf(stderr, "(EVENT      -- %u.%d) \t - Touche +  !\n", pthread_self(), getpid());
+        fprintf(stderr, "(EVENT      -- %lu.%d) \t - Touche +  !\n", pthread_self(), getpid());
         pthread_mutex_lock(&mutexDelais);
         delais = delais - 20;
         pthread_mutex_unlock(&mutexDelais);
         break;
       case KEY_M:
-        fprintf(stderr, "(EVENT      -- %u.%d) \t - Touche +  !\n", pthread_self(), getpid());
+        fprintf(stderr, "(EVENT      -- %lu.%d) \t - Touche -  !\n", pthread_self(), getpid());
         pthread_mutex_lock(&mutexDelais);
         delais = delais + 20;
         pthread_mutex_unlock(&mutexDelais);
@@ -743,8 +690,9 @@ void *FonctionEvent()
     }
   }
 
-  fprintf(stderr, "(EVENT      -- %u.%d) \t Clique sur le bouton Croix \n", pthread_self(), getpid()); //-7
-  fprintf(stderr, "(EVENT      -- %u.%d) \t EVENT à bien quitté son Thread \n", pthread_self(), getpid());
+  fprintf(stderr, "(EVENT      -- %lu.%d) \t Clique sur le bouton Croix \n", pthread_self(), getpid()); 
+  fprintf(stderr, "(EVENT      -- %lu.%d) \t EVENT à bien quitté son Thread \n", pthread_self(), getpid());
+  gameRunning = false;
   pthread_exit(NULL);
 }
 
@@ -759,7 +707,7 @@ void *FonctionPacGom()
 
       */
 
-     while(true)
+     while(gameRunning)
      {
 
         NiveauJeu++;
@@ -781,13 +729,13 @@ void *FonctionPacGom()
         DessinePacMan(L, C, dir);
         nbPacGom--;
         pthread_mutex_unlock(&mutexTab);
-        fprintf(stderr, "(PACMAN     -- %u.%d) \t PACMAN à été placé en (%d,%d) vers %d dans TAB \n", pthread_self(), getpid(), L, C, dir);
+        fprintf(stderr, "(PACMAN     -- %lu.%d) \t PACMAN à été placé en (%d,%d) vers %d dans TAB \n", pthread_self(), getpid(), L, C, dir);
 
         while (nbPacGom > 0)
         {
           pthread_mutex_lock(&mutexNbPacGom);
           pthread_cond_wait(&condNbPacGom, &mutexNbPacGom);
-          fprintf(stderr, "(PACGOM     -- %u.%d) \t La condition a été activée \n", pthread_self(), getpid());
+          fprintf(stderr, "(PACGOM     -- %lu.%d) \t La condition a été activée \n", pthread_self(), getpid());
           pthread_mutex_lock(&mutexTab);
           if(nbPacGom != 0)
           {
@@ -800,9 +748,9 @@ void *FonctionPacGom()
 
           pthread_mutex_unlock(&mutexTab);
           pthread_mutex_unlock(&mutexNbPacGom);
-          fprintf(stderr, "(PACGOM     -- %u.%d) \t FIn de la condition \n", pthread_self(), getpid());
+          fprintf(stderr, "(PACGOM     -- %lu.%d) \t FIn de la condition \n", pthread_self(), getpid());
         }
-        fprintf(stderr, "(PACGOM     -- %u.%d) \t Toute les PACGOM on été récupéré \n", pthread_self(), getpid());
+        fprintf(stderr, "(PACGOM     -- %lu.%d) \t Toute les PACGOM on été récupéré \n", pthread_self(), getpid());
 
         pthread_mutex_lock(&mutexTab);
         setTab(L, C, VIDE);
@@ -814,29 +762,29 @@ void *FonctionPacGom()
 
         pthread_mutex_lock(&mutexDelais);
         delais /= 2;
-        fprintf(stderr, "(PACGOM     -- %u.%d) \t Nouveau délais : %d \n", pthread_self(), getpid(), delais);
+        fprintf(stderr, "(PACGOM     -- %lu.%d) \t Nouveau délais : %d \n", pthread_self(), getpid(), delais);
         pthread_mutex_unlock(&mutexDelais);
 
      }
 
-
+    pthread_exit(NULL);
 
 }
 
 void *FonctionScore()
 {
-    fprintf(stderr, "(SCORE      -- %u.%d) \t Vous êtes bien rentrés dans le Thread score\n", pthread_self(), getpid());
+    fprintf(stderr, "(SCORE      -- %lu.%d) \t Vous êtes bien rentrés dans le Thread score\n", pthread_self(), getpid());
 
-    while (true)
+    while (gameRunning)
     {
         pthread_mutex_lock(&mutexScore);  // Verrouille le mutex avant d'attendre
-        fprintf(stderr, "(SCORE      -- %u.%d) \t Attente d'une Mise à jour du score\n", pthread_self(), getpid());
+        fprintf(stderr, "(SCORE      -- %lu.%d) \t Attente d'une Mise à jour du score\n", pthread_self(), getpid());
         while (MAJScore == false)
         {
             pthread_cond_wait(&condScore, &mutexScore); // Attend la mise à jour du score
         }
         
-        fprintf(stderr, "(SCORE      -- %u.%d) \t Une Mise a jour a été effectué\n", pthread_self(), getpid());
+        fprintf(stderr, "(SCORE      -- %lu.%d) \t Une Mise a jour a été effectué\n", pthread_self(), getpid());
         //Affichage du score
         if(score != 0)
         {
@@ -862,7 +810,7 @@ void *FonctionScore()
 
 void HandlerSIGINT(int sig)
 {
-  fprintf(stderr, "\n(SIGINT     -- %u.%d) \t Vous etez bien entrer dans le SIGINT PACMAN VA A GAUCHE\n", pthread_self(), getpid());
+  fprintf(stderr, "\n(SIGINT     -- %lu.%d) \t Vous etez bien entrer dans le SIGINT PACMAN VA A GAUCHE\n", pthread_self(), getpid());
   pthread_mutex_lock(&mutexDir);
   dir = GAUCHE;
   pthread_mutex_unlock(&mutexDir);
@@ -870,6 +818,7 @@ void HandlerSIGINT(int sig)
 
 void HandlerSIGHUP(int sig)
 {
+  fprintf(stderr, "\n(SIGINT     -- %lu.%d) \t Vous etez bien entrer dans le SIGHUP PACMAN VA A DROITE\n", pthread_self(), getpid());
   pthread_mutex_lock(&mutexDir);
   dir = DROITE;
   pthread_mutex_unlock(&mutexDir);
@@ -877,6 +826,7 @@ void HandlerSIGHUP(int sig)
 
 void HandlerSIGUSR1(int sig)
 {
+  fprintf(stderr, "\n(SIGINT     -- %lu.%d) \t Vous etez bien entrer dans le SIGUSR1 PACMAN VA EN HAUT\n", pthread_self(), getpid());
   pthread_mutex_lock(&mutexDir);
   dir = HAUT;
   pthread_mutex_unlock(&mutexDir);
@@ -884,6 +834,7 @@ void HandlerSIGUSR1(int sig)
 
 void HandlerSIGUSR2(int sig)
 {
+  fprintf(stderr, "\n(SIGINT     -- %lu.%d) \t Vous etez bien entrer dans le SIGUSR1 PACMAN VA EN BAS\n", pthread_self(), getpid());
   pthread_mutex_lock(&mutexDir);
   dir = BAS;
   pthread_mutex_unlock(&mutexDir);
