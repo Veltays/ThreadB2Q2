@@ -58,8 +58,6 @@ pthread_t ThreadEvent;  //! Handler du thread Event qui récupérera les differe
 pthread_t ThreadPacGom; //! Handler du thread PACGOM, qui se chargera de placé les PACGOM et d'incrémenter le niveau
 pthread_t ThreadScore;  //!Handler du thread Score, qui se chargera d'afficher le score
 pthread_t ThreadBonus;  //! Handler du thread bonus qui insera aléatoirement un bonus
-pthread_t threadCompteurFantomes;  //! Handler du thread qui permet de compter les fantomes
-phtread_t ThreadFantome[7];   //! Handler du thread Fantome crée par le ThreadCOmpteurFantome
 
 // mutex
 pthread_mutex_t mutexTab;      //! Mutex pour éviter que plusieurs accède en même temp au tableau
@@ -78,9 +76,6 @@ void *FonctionEvent();
 void *FonctionPacGom();
 void *FonctionScore();
 void *FonctionBonus();
-void *FonctionCompteurFantome();
-void *FonctionFantome();
-
 
 //Fonction Signaux
 void HandlerSIGINT(int sig);  // <- gauche
@@ -171,7 +166,6 @@ int main(int argc, char *argv[])
   pthread_create(&ThreadPacGom, NULL, (void *(*)(void *))FonctionPacGom, NULL);
   pthread_create(&ThreadPacMan, NULL, (void *(*)(void *))FonctionPacMan, NULL);
   pthread_create(&ThreadBonus, NULL, (void *(*)(void *))FonctionBonus, NULL);
-  pthread_create(&threadCompteurFantomes, NULL, (void *(*)(void *))FonctionCompteurFantome, NULL);
   pthread_create(&ThreadScore, NULL, (void *(*)(void *))FonctionScore, NULL);
   pthread_create(&ThreadEvent, NULL, (void *(*)(void *))FonctionEvent, NULL);
 
@@ -862,20 +856,15 @@ void MangerPacGom(int Type)
       if (cpt > 0)
       {
         int choix = rand() % cpt; // Prendre un indice aléatoire parmi les cases vides
-        pthread_mutex_lock(&mutexTab);
         setTab(VecVide[choix][0], VecVide[choix][1], BONUS);
         DessineBonus(VecVide[choix][0], VecVide[choix][1]);
-        pthread_mutex_unlock(&mutexTab);
-
 
         Attente(10 * 1000);
 
         if (tab[VecVide[choix][0]][VecVide[choix][1]].presence == BONUS)
         {
-          pthread_mutex_lock(&mutexTab);
           EffaceCarre(VecVide[choix][0], VecVide[choix][1]);
           setTab(VecVide[choix][0], VecVide[choix][1], VIDE);
-          pthread_mutex_unlock(&mutexTab);
         }
       }
       else
@@ -886,31 +875,6 @@ void MangerPacGom(int Type)
     pthread_exit(NULL);
   }
 
-void *FonctionCompteurFantome()
-{
-  fprintf(stderr, "(CPTFANTOME -- %lu.%d) \t Vous êtes bien rentrés dans le Thread Compteur de Fantome \n", pthread_self(), getpid());
-  for(int i = 0; i<8; i++)
-  {
-      pthread_create(&ThreadFantome[i], NULL, (void *(*)(void *))FonctionFantome, NULL);
-  }
-
-
-
-
-}
-
-
-
-
-void *FonctionFantome()
-{
-  fprintf(stderr, "(CFANTOME   -- %lu.%d) \t Vous êtes bien rentrés dans le Thread du Fantome \n", pthread_self(), getpid());
-
-
-
-
-
-}
   // ? **************************************************************************************************************
   // ? *************************************** SIGNAUX **************************************************************
   // ? **************************************************************************************************************
