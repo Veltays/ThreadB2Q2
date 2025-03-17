@@ -498,12 +498,12 @@ int CaseAleatoire(S_FANTOME *fantome)
 
   if (cpt == 0)
   {
-    fprintf(stderr, "(DEBUG) Aucune case disponible, retour direction par défaut.\n");
+    //fprintf(stderr, "(DEBUG) Aucune case disponible, retour direction par défaut.\n");
     return -1; // Ou une direction par défaut
   }
 
   int choix = rand() % cpt;
-  fprintf(stderr, "(DEBUG) Direction choisie:  %s\n", posiPac(vect[choix]));
+  //fprintf(stderr, "(DEBUG) Direction choisie:  %s\n", posiPac(vect[choix]));
 
   return vect[choix];
 }
@@ -665,8 +665,8 @@ void *FonctionPacMan()
               pthread_cancel(pthread_self());
             if (mode == 2)
             {
-              fprintf(stderr, "(PACMAN     -- %lu.%d) \t Pacman Vient de manger un fantome dont l'identifiant est le %lu ", pthread_self(), getpid(), tab[L][C-1].tid);
-              pthread_cancel(tab[L][C-1].tid);
+              fprintf(stderr, "(PACMAN     -- %lu.%d) \t Pacman Vient de manger un fantome dont l'identifiant est le %lu ", pthread_self(), getpid(), tab[L][C - 1].tid);
+              pthread_cancel(tab[L][C - 1].tid);
             }
             break;
           }
@@ -693,7 +693,7 @@ void *FonctionPacMan()
               pthread_cancel(pthread_self());
             if (mode == 2)
             {
-              fprintf(stderr, "(PACMAN     -- %lu.%d) \t Pacman Vient de manger un fantome dont l'identifiant est le %lu ", pthread_self(), getpid(), tab[L ][C + 1].tid);
+              fprintf(stderr, "(PACMAN     -- %lu.%d) \t Pacman Vient de manger un fantome dont l'identifiant est le %lu ", pthread_self(), getpid(), tab[L][C + 1].tid);
               pthread_cancel(tab[L][C + 1].tid);
             }
             break;
@@ -761,8 +761,10 @@ void *FonctionPacMan()
     if (nbPacGom > 0)
     {
       pthread_mutex_lock(&mutexTab);
+      pthread_mutex_lock(&mutexDir);
       setTab(L, C, PACMAN, pthread_self());
       DessinePacMan(L, C, dir);
+      pthread_mutex_unlock(&mutexDir);
       pthread_mutex_unlock(&mutexTab);
     }
     else
@@ -861,29 +863,31 @@ void *FonctionPacGom()
     pthread_mutex_unlock(&mutexDir);
 
     pthread_mutex_lock(&mutexTab);
+    pthread_mutex_lock(&mutexDir);
     setTab(L, C, PACMAN, pthread_self());
     DessinePacMan(L, C, dir);
     MangerPacGom(PACGOM);
+    pthread_mutex_unlock(&mutexDir);
     pthread_mutex_unlock(&mutexTab);
+
+
     fprintf(stderr, "(PACMAN     -- %lu.%d) \t PACMAN à été placé en (%d,%d) vers %d dans TAB \n", pthread_self(), getpid(), L, C, dir);
-
-
+    
+    pthread_mutex_lock(&mutexNbPacGom);
     while (nbPacGom > 0)
     {
-      pthread_mutex_lock(&mutexNbPacGom);
       pthread_cond_wait(&condNbPacGom, &mutexNbPacGom);
-      pthread_mutex_unlock(&mutexNbPacGom);
       fprintf(stderr, "(PACGOM     -- %lu.%d) \t La condition a été activée \n", pthread_self(), getpid());
 
       pthread_mutex_lock(&mutexTab);
       DessineChiffre(12, 24, (nbPacGom % 10));
       DessineChiffre(12, 23, ((nbPacGom / 10) % 10));
       DessineChiffre(12, 22, ((nbPacGom / 100) % 10));
-
       pthread_mutex_unlock(&mutexTab);
 
       fprintf(stderr, "(PACGOM     -- %lu.%d) \t FIn de la condition \n", pthread_self(), getpid());
     }
+    pthread_mutex_unlock(&mutexNbPacGom);
 
 
     fprintf(stderr, "(PACGOM     -- %lu.%d) \t Toute les PACGOM on été récupéré \n", pthread_self(), getpid());
@@ -1009,7 +1013,7 @@ void *FonctionCompteurFantome()
 
   int couleurs[8] = {ROUGE, ROUGE, VERT, VERT, ORANGE, ORANGE, MAUVE, MAUVE};
 
-  for (int i = 0; i < 8; i++)
+  for (int i = 0; i < 2; i++)
   {
 
     S_FANTOME *fantome = InitFantom(9, 8, 0, couleurs[i]);
@@ -1019,23 +1023,21 @@ void *FonctionCompteurFantome()
     Attente(delais);
   }
 
-
   while (gameRunning)
   {
-    pthread_mutex_lock(&mutexNbFantomes); // Verrouille le mutex avant d'attendre
     while (nbRouge == 2 && nbVert == 2 && nbMauve == 2 && nbOrange == 2)
     {
+      pthread_mutex_lock(&mutexNbFantomes); // Verrouille le mutex avant d'attendre
       pthread_cond_wait(&condNbFantomes, &mutexNbFantomes);
-      fprintf(stderr, "(CPTFANTOME -- %lu.%d) \t J'ai bien été reveillé a la mort d'un fantome");
-      pthread_mutex_unlock(&mutexNbFantomes); // Verrouille le mutex avant d'attendre
-      
+      // fprintf(stderr, "(CPTFANTOME -- %lu.%d) \t J'ai bien été reveillé a la mort d'un fantome");
+      // pthread_mutex_unlock(&mutexNbFantomes); // Verrouille le mutex avant d'attendre
     }
 
-    if (nbRouge < 2)
-    {
-      S_FANTOME *fantome = InitFantom(9, 8, 0, ROUGE);
-      pthread_create(&ThreadFantome[7], NULL, (void *(*)(void *))FonctionFantome, (void *)fantome);
-    }
+    // if (nbRouge < 2)
+    // {
+    //   S_FANTOME *fantome = InitFantom(9, 8, 0, ROUGE);
+    //   pthread_create(&ThreadFantome[7], NULL, (void *(*)(void *))FonctionFantome, (void *)fantome);
+    // }
     // if (nbVert < 2)
     // {
     //   S_FANTOME *fantome = InitFantom(9, 8, 0, VERT);
@@ -1062,12 +1064,9 @@ void *FonctionFantome(void *arg)
 
   S_FANTOME *fantome = (S_FANTOME *)arg;
 
-  fprintf(stderr, "(DEBUG) nbFantome avant = %d\n", nbFantome);
   pthread_mutex_lock(&mutexNbFantomes);
   nbFantome++;
-  fprintf(stderr, "(DEBUG) nbFantome après = %d\n", nbFantome);
   pthread_mutex_unlock(&mutexNbFantomes);
-
 
   pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, NULL); // il attend avant de mourir
   pthread_cleanup_push(FonctionFinFantome, fantome);
@@ -1082,36 +1081,22 @@ void *FonctionFantome(void *arg)
   pthread_mutex_unlock(&mutexDelais);
 
 
-  
-
-
-  fprintf(stderr, "(FANTOME   -- %lu.%d) \t Rentre dans la boucle d'attente \n", pthread_self(), getpid());
 
   while (true)
   {
     
-    if (tab[fantome->L][fantome->C].presence == PACMAN || fantome->cache == PACMAN)
-    {
-      if (mode == 1)
-        pthread_cancel(ThreadPacMan);
-      if (mode == 2)
-        pthread_cancel(pthread_self());
-    }
-
-    pthread_testcancel();
-
-
     pthread_mutex_lock(&mutexTab);
     setTab(fantome->L, fantome->C, FANTOME, pthread_self());
     DessineFantome(fantome->L, fantome->C, fantome->couleur, dirFantome);
-
     pthread_mutex_unlock(&mutexTab);
 
     Attente(delaisFantome);
 
+
+
+
+
     pthread_mutex_lock(&mutexTab);
-    setTab(fantome->L, fantome->C, fantome->cache); //On remet l'ancienne case pour pas bouffer les PACGOM
-    EffaceCarre(fantome->L, fantome->C);
     switch (fantome->cache)
     {
     case PACGOM:
@@ -1126,10 +1111,26 @@ void *FonctionFantome(void *arg)
     }
     pthread_mutex_unlock(&mutexTab);
 
+    pthread_mutex_lock(&mutexTab);
+    setTab(fantome->L, fantome->C, fantome->cache); //On remet l'ancienne case pour pas bouffer les PACGOM
+    EffaceCarre(fantome->L, fantome->C);
+    pthread_mutex_unlock(&mutexTab);
+
     switch (dirFantome)
     {
+
     case (GAUCHE):
-      if(tab[fantome->L][fantome->C - 1].presence != MUR && tab[fantome->L][fantome->C - 1].presence != FANTOME )
+      if (tab[fantome->L][fantome->C - 1].presence == PACMAN)
+      {
+        if (mode == 1)
+          pthread_cancel(ThreadPacMan);
+        if (mode == 2)
+        {
+          pthread_cancel(pthread_self());
+          pthread_testcancel();
+        }
+      }
+      if (tab[fantome->L][fantome->C - 1].presence != MUR && tab[fantome->L][fantome->C - 1].presence != FANTOME)
       {
         fantome->cache = tab[fantome->L][fantome->C - 1].presence; //On sauvegarde la case d'après
         //fprintf(stderr, "(FANTOME   -- %lu.%d) \t On avait dans la case tab[%d][%d] un %s \n", pthread_self(), getpid(), fantome->L, fantome->C, presence_nom(tab[fantome->L][fantome->C - 1].presence));
@@ -1141,7 +1142,19 @@ void *FonctionFantome(void *arg)
         //fprintf(stderr, "(FANTOME   -- %lu.%d) \t Nouvelle direction %d - %s \n", pthread_self(), getpid(), dirFantome, posiPac(dirFantome));
       }
       break;
+
+
     case (DROITE):
+      if (tab[fantome->L][fantome->C +1].presence == PACMAN)
+      {
+        if (mode == 1)
+          pthread_cancel(ThreadPacMan);
+        if (mode == 2)
+        {
+          pthread_cancel(pthread_self());
+          pthread_testcancel();
+        }
+      }
       if (tab[fantome->L][fantome->C + 1].presence != MUR && tab[fantome->L][fantome->C + 1].presence != FANTOME)
       {
         fantome->cache = tab[fantome->L][fantome->C + 1].presence; //On sauvegarde la case d'après
@@ -1155,7 +1168,19 @@ void *FonctionFantome(void *arg)
         //fprintf(stderr, "(FANTOME   -- %lu.%d) \t Nouvelle direction %d - %s \n", pthread_self(), getpid(), dirFantome, posiPac(dirFantome));
       }
       break;
+
+
     case (HAUT):
+      if (tab[fantome->L - 1][fantome->C].presence == PACMAN)
+      {
+        if (mode == 1)
+          pthread_cancel(ThreadPacMan);
+        if (mode == 2)
+        {
+          pthread_cancel(pthread_self());
+          pthread_testcancel();
+        }
+      }
       if (tab[fantome->L - 1][fantome->C].presence != MUR && tab[fantome->L - 1][fantome->C].presence != FANTOME)
       {
         fantome->cache = tab[fantome->L - 1][fantome->C].presence; //On sauvegarde la case d'après
@@ -1169,7 +1194,19 @@ void *FonctionFantome(void *arg)
         //fprintf(stderr, "(FANTOME   -- %lu.%d) \t Nouvelle direction %d - %s \n", pthread_self(), getpid(), dirFantome, posiPac(dirFantome));
       }
       break;
+
+
     case (BAS):
+      if (tab[fantome->L + 1][fantome->C].presence == PACMAN)
+      {
+        if (mode == 1)
+          pthread_cancel(ThreadPacMan);
+        if (mode == 2)
+        {
+          pthread_cancel(pthread_self());
+          pthread_testcancel();
+        }
+      }
       if (tab[fantome->L + 1][fantome->C].presence != MUR && tab[fantome->L + 1][fantome->C].presence != FANTOME)
       {
         fantome->cache = tab[fantome->L + 1][fantome->C].presence; //On sauvegarde la case d'après
@@ -1181,12 +1218,16 @@ void *FonctionFantome(void *arg)
         dirFantome = CaseAleatoire(fantome);
         //fprintf(stderr, "(FANTOME   -- %lu.%d) \t Nouvelle direction %d - %s \n", pthread_self(), getpid(), dirFantome, posiPac(dirFantome));
       }
+
+
+
     }
   }
 
-  pthread_cleanup_pop(1);
-  pthread_exit(NULL);
+    pthread_cleanup_pop(0);
+    pthread_exit(NULL);
 }
+
 
 // ? **************************************************************************************************************
 // ? *************************************** SIGNAUX **************************************************************
@@ -1233,27 +1274,25 @@ void FonctionFinFantome(void *param)
   S_FANTOME *fantome = (S_FANTOME *)param;
   fprintf(stderr, "\n (FINFANTOME) Donnée recu \n L = %d, \n C = %d, \n Couleur = %d, \n cache = %d \n", fantome->L, fantome->C, fantome->couleur, fantome->cache);
 
-
   pthread_mutex_lock(&mutexNbPacGom);
-  pthread_mutex_lock(&mutexTab);
 
   switch (fantome->cache)
   {
+  case VIDE:
+    fprintf(stderr, "(FINFANTOME) Le fantome est mort sur une caseVide\n");
+    break;
   case PACGOM:
     nbPacGom--;
-    fprintf(stderr,"(FINFANTOME) Une Pacgom a été décrementé \n");
+    fprintf(stderr, "(FINFANTOME) Une Pacgom a été décrementé \n");
     break;
   case SUPERPACGOM:
-    fprintf(stderr,"(FINFANTOME) Une SUPERPACGOM a été décrementé\n");
+    fprintf(stderr, "(FINFANTOME) Une SUPERPACGOM a été décrementé\n");
     nbPacGom = nbPacGom - 5;
     break;
   }
 
+  fprintf(stderr, "\n (FINFANTOME)2 Donnée recu \n L = %d, \n C = %d, \n Couleur = %d, \n cache = %d \n", fantome->L, fantome->C, fantome->couleur, fantome->cache);
 
-  fprintf(stderr, "\n (FINFANTOME) Donnée recu \n L = %d, \n C = %d, \n Couleur = %d, \n cache = %d \n", fantome->L, fantome->C, fantome->couleur, fantome->cache);
-  
-  
-  pthread_mutex_unlock(&mutexTab);
   pthread_mutex_unlock(&mutexNbPacGom);
 
   switch (fantome->couleur)
@@ -1272,11 +1311,18 @@ void FonctionFinFantome(void *param)
     break;
   }
 
-    
+  fprintf(stderr,"(FINFANTOME) On a bien décrementé la couleurs %d\n",fantome->couleur);
+
+
+  fprintf(stderr,"(DEBUG)  NbFantome avant = %d\n",nbFantome);
   pthread_mutex_lock(&mutexNbFantomes);
   nbFantome--;
   pthread_mutex_unlock(&mutexNbFantomes);
+  fprintf(stderr,"(DEBUG)  NbFantome après = %d\n",nbFantome);
 
 
-  pthread_cond_signal(&condNbFantomes);
+
+  //pthread_cond_signal(&condNbFantomes);
+
+
 }
