@@ -1,0 +1,1181 @@
+Script démarré sur 2025-03-17 22:17:18+01:00
+*(PRINCIPALE -- 140632552987520.19595) 	 Ouverture de la fenetre graphique
+(EVENT      -- 140632370693888.19595) 	 EVENT est bien rentré dans son Thread
+(PACMAN     -- 140632479057664.19595) 	 Armenent du SIGINT s'est déroulé sans soucis 
+(PACMAN     -- 140632479057664.19595) 	 Armenent du SIGHUP s'est déroulé sans soucis 
+(PACMAN     -- 140632479057664.19595) 	 Armenent du SIGUSR1 s'est déroulé sans soucis 
+(PACMAN     -- 140632479057664.19595) 	 Armenent du SIGUSR2 s'est déroulé sans soucis 
+(PACMAN     -- 140632479057664.19595) 	 PACMAN est bien rentré dans son thread. 
+(BONUS      -- 140632395872000.19595) 	 Vous êtes bien rentrés dans le Thread Bonus 
+(BONUS      -- 140632395872000.19595) 	 Un bonus apparaitra dans 14 secondes 
+(CPTFANTOME -- 140632387479296.19595) 	 Vous êtes bien rentrés dans le Thread Compteur de Fantome 
+(CPTFANTOME -- 140632387479296.19595) 	 Fantôme de couleur 400000 créé à la position (9, 8)
+(SCORE      -- 140632379086592.19595) 	 Vous êtes bien rentrés dans le Thread score
+(SCORE      -- 140632379086592.19595) 	 Attente d'une Mise à jour du score
+(PACMAN     -- 140632479057664.19595) 	 PACMAN à été placé en (15,8) vers 500002 dans TAB 
+(PACMAN     -- 140632479057664.19595) 	 PACMAN rentre dans la boucle d'avance auto. 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 140632479057664.19595)
+Position  : tab[15][8]
+Direction : Gauche 
+Delais : 300 
+score : 0 
+PacGomRestante : 0 
+Nombre De Fantome : 0 
+Obstacle  : 
+	     1
+	 0   2   0
+	     1
+
+	                   Mur            
+	 Vide             Pac-Man           Vide           
+	                   Mur            
+
+
+ ---------------------------- -------------------------------------------- 
+
+(PACGOM     -- 140632487450368.19595) 	 Je place la SUPERPACGOM EN tab[2][1] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la SUPERPACGOM EN tab[2][15] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la SUPERPACGOM EN tab[15][1] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la SUPERPACGOM EN tab[15][15] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[0][0] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[0][1] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[0][2] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[0][3] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[0][4] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[0][5] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[0][6] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[0][7] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[0][8] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[0][9] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[0][10] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[0][11] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[0][12] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[0][13] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[0][14] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[0][15] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[0][16] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[1][0] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[1][1] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[1][2] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[1][3] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[1][4] 
+(FANTOME   -- 140632362301184.19595) 	 Vous êtes bien rentrés dans le Thread du Fantome 
+(FANTOME   -- 140632362301184.19595) 	 Fantôme de couleur 400000 créé à la position (9, 8) et en direction de Haut
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[1][5] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[1][6] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[1][7] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[1][8] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[1][9] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[1][10] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[1][11] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[1][12] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[1][13] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[1][14] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[1][15] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[1][16] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[2][0] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Super Pac-Gom est placé en tab[2][1] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[2][2] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[2][3] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[2][4] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[2][5] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[2][6] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[2][7] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[2][8] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[2][9] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[2][10] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[2][11] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[2][12] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[2][13] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[2][14] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Super Pac-Gom est placé en tab[2][15] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[2][16] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[3][0] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[3][1] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[3][2] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[3][3] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[3][4] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[3][5] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[3][6] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[3][7] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[3][8] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[3][9] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[3][10] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[3][11] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[3][12] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[3][13] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[3][14] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[3][15] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[3][16] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[4][0] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[4][1] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[4][2] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[4][3] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[4][4] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[4][5] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[4][6] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[4][7] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[4][8] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[4][9] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[4][10] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[4][11] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[4][12] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[4][13] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[4][14] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[4][15] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[4][16] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[5][0] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[5][1] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[5][2] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[5][3] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[5][4] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[5][5] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[5][6] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[5][7] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[5][8] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[5][9] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[5][10] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[5][11] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[5][12] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[5][13] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[5][14] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[5][15] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[5][16] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[6][0] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[6][1] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[6][2] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[6][3] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[6][4] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[6][5] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[6][6] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[6][7] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[6][8] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[6][9] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[6][10] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[6][11] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[6][12] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[6][13] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[6][14] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[6][15] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[6][16] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[7][0] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[7][1] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[7][2] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[7][3] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[7][4] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[7][5] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[7][6] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[7][7] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[7][8] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[7][9] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[7][10] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[7][11] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[7][12] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[7][13] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[7][14] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[7][15] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[7][16] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[8][0] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[8][1] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[8][2] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[8][3] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[8][4] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[8][5] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[8][6] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[8][7] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé en tab[8][8] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[8][9] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[8][10] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[8][11] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[8][12] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[8][13] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[8][14] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[8][15] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[8][16] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[9][0] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[9][1] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[9][2] 
+(CPTFANTOME -- 140632387479296.19595) 	 Fantôme de couleur 400000 créé à la position (9, 8)
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[9][3] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[9][4] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[9][5] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[9][6] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[9][7] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé en tab[9][8] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[9][9] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[9][10] 
+(FANTOME   -- 140632353908480.19595) 	 Vous êtes bien rentrés dans le Thread du Fantome 
+(FANTOME   -- 140632353908480.19595) 	 Fantôme de couleur 400000 créé à la position (9, 8) et en direction de Haut
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[9][11] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[9][12] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[9][13] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[9][14] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[9][15] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[9][16] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[10][0] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[10][1] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[10][2] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[10][3] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[10][4] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[10][5] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[10][6] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[10][7] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[10][8] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[10][9] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[10][10] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[10][11] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[10][12] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[10][13] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[10][14] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[10][15] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[10][16] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[11][0] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[11][1] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[11][2] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[11][3] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[11][4] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[11][5] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[11][6] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[11][7] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[11][8] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[11][9] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[11][10] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[11][11] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[11][12] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[11][13] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[11][14] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[11][15] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[11][16] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[12][0] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[12][1] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[12][2] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[12][3] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[12][4] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[12][5] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[12][6] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[12][7] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[12][8] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[12][9] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[12][10] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[12][11] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[12][12] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[12][13] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[12][14] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[12][15] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[12][16] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[13][0] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[13][1] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[13][2] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[13][3] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[13][4] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[13][5] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[13][6] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[13][7] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[13][8] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[13][9] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[13][10] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[13][11] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[13][12] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[13][13] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[13][14] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[13][15] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[13][16] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[14][0] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[14][1] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[14][2] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[14][3] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[14][4] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[14][5] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[14][6] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[14][7] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[14][8] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[14][9] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[14][10] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[14][11] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[14][12] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[14][13] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[14][14] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[14][15] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[14][16] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[15][0] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Super Pac-Gom est placé en tab[15][1] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[15][2] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[15][3] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[15][4] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[15][5] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[15][6] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[15][7] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Pac-Man est placé en tab[15][8] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[15][9] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[15][10] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[15][11] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[15][12] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[15][13] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[15][14] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Super Pac-Gom est placé en tab[15][15] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[15][16] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[16][0] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[16][1] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[16][2] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[16][3] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[16][4] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[16][5] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[16][6] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[16][7] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[16][8] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[16][9] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[16][10] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[16][11] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[16][12] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[16][13] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[16][14] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[16][15] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[16][16] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[17][0] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[17][1] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[17][2] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[17][3] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[17][4] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[17][5] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[17][6] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[17][7] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[17][8] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[17][9] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[17][10] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[17][11] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[17][12] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[17][13] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[17][14] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[17][15] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[17][16] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[18][0] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[18][1] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[18][2] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[18][3] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[18][4] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[18][5] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[18][6] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[18][7] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[18][8] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[18][9] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[18][10] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[18][11] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[18][12] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[18][13] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[18][14] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[18][15] 
+(CPTFANTOME -- 140632387479296.19595) 	 Fantôme de couleur 400002 créé à la position (9, 8)
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[18][16] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[19][0] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[19][1] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[19][2] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[19][3] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[19][4] 
+(FANTOME   -- 140632345515776.19595) 	 Vous êtes bien rentrés dans le Thread du Fantome 
+(FANTOME   -- 140632345515776.19595) 	 Fantôme de couleur 400002 créé à la position (9, 8) et en direction de Haut
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[19][5] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[19][6] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[19][7] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[19][8] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[19][9] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[19][10] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[19][11] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[19][12] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[19][13] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[19][14] 
+(PACGOM     -- 140632487450368.19595) 	 Je place la PACGOM EN tab[19][15] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[19][16] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[20][0] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[20][1] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[20][2] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[20][3] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[20][4] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[20][5] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[20][6] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[20][7] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[20][8] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[20][9] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[20][10] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[20][11] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[20][12] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[20][13] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[20][14] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[20][15] 
+(PACGOM     -- 140632487450368.19595) 	 Pas de PACGOM placé car Mur est placé en tab[20][16] 
+(PACMAN     -- 140632479057664.19595) 	 PACMAN vient de mangé une PACGOM 
+(SCORE      -- 140632379086592.19595) 	 Une Mise a jour a été effectué
+(PACMAN     -- 140632479057664.19595) 	 PACMAN à été placé en (15,7) vers 500002 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 140632479057664.19595)
+Position  : tab[15][7]
+Direction : Gauche 
+Delais : 300 
+score : 1 
+PacGomRestante : 165 
+Nombre De Fantome : 3 
+Obstacle  : 
+	     3
+	 3   2   0
+	     1
+
+	                   Pac-Gom        
+	 Pac-Gom          Pac-Man           Vide           
+	                   Mur            
+
+
+ ---------------------------- -------------------------------------------- 
+
+(SCORE      -- 140632379086592.19595) 	 Attente d'une Mise à jour du score
+(PACMAN     -- 140632487450368.19595) 	 PACMAN vient de mangé une PACGOM 
+(PACMAN     -- 140632487450368.19595) 	 PACMAN à été placé en (15,7) vers 500002 dans TAB 
+(SCORE      -- 140632379086592.19595) 	 Une Mise a jour a été effectué
+(SCORE      -- 140632379086592.19595) 	 Attente d'une Mise à jour du score
+(CPTFANTOME -- 140632387479296.19595) 	 Fantôme de couleur 400002 créé à la position (9, 8)
+(FANTOME   -- 140631859001088.19595) 	 Vous êtes bien rentrés dans le Thread du Fantome 
+(FANTOME   -- 140631859001088.19595) 	 Fantôme de couleur 400002 créé à la position (9, 8) et en direction de Haut
+(PACMAN     -- 140632479057664.19595) 	 PACMAN vient de mangé une PACGOM 
+(PACGOM     -- 140632487450368.19595) 	 La condition a été activée 
+(SCORE      -- 140632379086592.19595) 	 Une Mise a jour a été effectué
+(PACMAN     -- 140632479057664.19595) 	 PACMAN à été placé en (15,6) vers 500002 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 140632479057664.19595)
+Position  : tab[15][6]
+Direction : Gauche 
+Delais : 300 
+score : 3 
+PacGomRestante : 163 
+Nombre De Fantome : 4 
+Obstacle  : 
+	     1
+	 3   2   0
+	     3
+
+	                   Mur            
+	 Pac-Gom          Pac-Man           Vide           
+	                   Pac-Gom        
+
+
+ ---------------------------- -------------------------------------------- 
+
+(SCORE      -- 140632379086592.19595) 	 Attente d'une Mise à jour du score
+(PACGOM     -- 140632487450368.19595) 	 FIn de la condition 
+(CPTFANTOME -- 140632387479296.19595) 	 Fantôme de couleur 400003 créé à la position (9, 8)
+(FANTOME   -- 140631850608384.19595) 	 Vous êtes bien rentrés dans le Thread du Fantome 
+(FANTOME   -- 140631850608384.19595) 	 Fantôme de couleur 400003 créé à la position (9, 8) et en direction de Haut
+(PACMAN     -- 140632479057664.19595) 	 PACMAN vient de mangé une PACGOM 
+(PACGOM     -- 140632487450368.19595) 	 La condition a été activée 
+(SCORE      -- 140632379086592.19595) 	 Une Mise a jour a été effectué
+(PACMAN     -- 140632479057664.19595) 	 PACMAN à été placé en (15,5) vers 500002 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 140632479057664.19595)
+Position  : tab[15][5]
+Direction : Gauche 
+Delais : 300 
+score : 4 
+PacGomRestante : 162 
+Nombre De Fantome : 5 
+Obstacle  : 
+	     1
+	 3   2   0
+	     1
+
+	                   Mur            
+	 Pac-Gom          Pac-Man           Vide           
+	                   Mur            
+
+
+ ---------------------------- -------------------------------------------- 
+
+(SCORE      -- 140632379086592.19595) 	 Attente d'une Mise à jour du score
+(PACGOM     -- 140632487450368.19595) 	 FIn de la condition 
+(CPTFANTOME -- 140632387479296.19595) 	 Fantôme de couleur 400003 créé à la position (9, 8)
+(FANTOME   -- 140631842215680.19595) 	 Vous êtes bien rentrés dans le Thread du Fantome 
+(FANTOME   -- 140631842215680.19595) 	 Fantôme de couleur 400003 créé à la position (9, 8) et en direction de Haut
+(PACMAN     -- 140632479057664.19595) 	 PACMAN vient de mangé une PACGOM 
+(PACGOM     -- 140632487450368.19595) 	 La condition a été activée 
+(SCORE      -- 140632379086592.19595) 	 Une Mise a jour a été effectué
+(PACMAN     -- 140632479057664.19595) 	 PACMAN à été placé en (15,4) vers 500002 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 140632479057664.19595)
+Position  : tab[15][4]
+Direction : Gauche 
+Delais : 300 
+score : 5 
+PacGomRestante : 161 
+Nombre De Fantome : 6 
+Obstacle  : 
+	     3
+	 1   2   0
+	     3
+
+	                   Pac-Gom        
+	 Mur              Pac-Man           Vide           
+	                   Pac-Gom        
+
+
+ ---------------------------- -------------------------------------------- 
+
+(SCORE      -- 140632379086592.19595) 	 Attente d'une Mise à jour du score
+(PACGOM     -- 140632487450368.19595) 	 FIn de la condition 
+(EVENT      -- 140632370693888.19595) 	 - Flèche De haut !
+(CPTFANTOME -- 140632387479296.19595) 	 Fantôme de couleur 400001 créé à la position (9, 8)
+(FANTOME   -- 140631833822976.19595) 	 Vous êtes bien rentrés dans le Thread du Fantome 
+(FANTOME   -- 140631833822976.19595) 	 Fantôme de couleur 400001 créé à la position (9, 8) et en direction de Haut
+(EVENT      -- 140632370693888.19595) 	 - Touche +  !
+
+(SIGINT     -- 140632479057664.19595) 	 Vous etez bien entrer dans le SIGUSR1 PACMAN VA EN HAUT
+(PACMAN     -- 140632479057664.19595) 	 PACMAN vient de mangé une PACGOM 
+(PACGOM     -- 140632487450368.19595) 	 La condition a été activée 
+(SCORE      -- 140632379086592.19595) 	 Une Mise a jour a été effectué
+(PACMAN     -- 140632479057664.19595) 	 PACMAN à été placé en (14,4) vers 500000 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 140632479057664.19595)
+Position  : tab[14][4]
+Direction : Haut 
+Delais : 280 
+score : 6 
+PacGomRestante : 160 
+Nombre De Fantome : 7 
+Obstacle  : 
+	     3
+	 1   2   1
+	     0
+
+	                   Pac-Gom        
+	 Mur              Pac-Man           Mur            
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(SCORE      -- 140632379086592.19595) 	 Attente d'une Mise à jour du score
+(PACGOM     -- 140632487450368.19595) 	 FIn de la condition 
+(EVENT      -- 140632370693888.19595) 	 - Touche +  !
+(CPTFANTOME -- 140632387479296.19595) 	 Fantôme de couleur 400001 créé à la position (9, 8)
+(FANTOME   -- 140631825430272.19595) 	 Vous êtes bien rentrés dans le Thread du Fantome 
+(FANTOME   -- 140631825430272.19595) 	 Fantôme de couleur 400001 créé à la position (9, 8) et en direction de Haut
+(EVENT      -- 140632370693888.19595) 	 - Touche +  !
+(PACMAN     -- 140632479057664.19595) 	 PACMAN vient de mangé une PACGOM 
+(PACGOM     -- 140632487450368.19595) 	 La condition a été activée 
+(SCORE      -- 140632379086592.19595) 	 Une Mise a jour a été effectué
+(PACMAN     -- 140632479057664.19595) 	 PACMAN à été placé en (13,4) vers 500000 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 140632479057664.19595)
+Position  : tab[13][4]
+Direction : Haut 
+Delais : 240 
+score : 7 
+PacGomRestante : 159 
+Nombre De Fantome : 8 
+Obstacle  : 
+	     3
+	 3   2   3
+	     0
+
+	                   Pac-Gom        
+	 Pac-Gom          Pac-Man           Pac-Gom        
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(PACGOM     -- 140632487450368.19595) 	 FIn de la condition 
+(SCORE      -- 140632379086592.19595) 	 Attente d'une Mise à jour du score
+(EVENT      -- 140632370693888.19595) 	 - Touche +  !
+(PACMAN     -- 140632479057664.19595) 	 PACMAN vient de mangé une PACGOM 
+(PACGOM     -- 140632487450368.19595) 	 La condition a été activée 
+(SCORE      -- 140632379086592.19595) 	 Une Mise a jour a été effectué
+(PACMAN     -- 140632479057664.19595) 	 PACMAN à été placé en (12,4) vers 500000 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 140632479057664.19595)
+Position  : tab[12][4]
+Direction : Haut 
+Delais : 220 
+score : 8 
+PacGomRestante : 158 
+Nombre De Fantome : 8 
+Obstacle  : 
+	     3
+	 1   2   1
+	     0
+
+	                   Pac-Gom        
+	 Mur              Pac-Man           Mur            
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(PACGOM     -- 140632487450368.19595) 	 FIn de la condition 
+(SCORE      -- 140632379086592.19595) 	 Attente d'une Mise à jour du score
+(EVENT      -- 140632370693888.19595) 	 - Touche +  !
+(PACMAN     -- 140632479057664.19595) 	 PACMAN vient de mangé une PACGOM 
+(PACGOM     -- 140632487450368.19595) 	 La condition a été activée 
+(SCORE      -- 140632379086592.19595) 	 Une Mise a jour a été effectué
+(PACMAN     -- 140632479057664.19595) 	 PACMAN à été placé en (11,4) vers 500000 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 140632479057664.19595)
+Position  : tab[11][4]
+Direction : Haut 
+Delais : 200 
+score : 9 
+PacGomRestante : 157 
+Nombre De Fantome : 8 
+Obstacle  : 
+	     3
+	 1   2   1
+	     0
+
+	                   Pac-Gom        
+	 Mur              Pac-Man           Mur            
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(SCORE      -- 140632379086592.19595) 	 Attente d'une Mise à jour du score
+(PACGOM     -- 140632487450368.19595) 	 FIn de la condition 
+(EVENT      -- 140632370693888.19595) 	 - Touche +  !
+(EVENT      -- 140632370693888.19595) 	 - Touche +  !
+(PACMAN     -- 140632479057664.19595) 	 PACMAN vient de mangé une PACGOM 
+(PACGOM     -- 140632487450368.19595) 	 La condition a été activée 
+(SCORE      -- 140632379086592.19595) 	 Une Mise a jour a été effectué
+(PACMAN     -- 140632479057664.19595) 	 PACMAN à été placé en (10,4) vers 500000 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 140632479057664.19595)
+Position  : tab[10][4]
+Direction : Haut 
+Delais : 160 
+score : 10 
+PacGomRestante : 156 
+Nombre De Fantome : 8 
+Obstacle  : 
+	     3
+	 1   2   1
+	     0
+
+	                   Pac-Gom        
+	 Mur              Pac-Man           Mur            
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(SCORE      -- 140632379086592.19595) 	 Attente d'une Mise à jour du score
+(PACGOM     -- 140632487450368.19595) 	 FIn de la condition 
+(EVENT      -- 140632370693888.19595) 	 - Touche +  !
+(PACMAN     -- 140632479057664.19595) 	 PACMAN vient de mangé une PACGOM 
+(PACGOM     -- 140632487450368.19595) 	 La condition a été activée 
+(SCORE      -- 140632379086592.19595) 	 Une Mise a jour a été effectué
+(PACMAN     -- 140632479057664.19595) 	 PACMAN à été placé en (9,4) vers 500000 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 140632479057664.19595)
+Position  : tab[9][4]
+Direction : Haut 
+Delais : 140 
+score : 11 
+PacGomRestante : 155 
+Nombre De Fantome : 8 
+Obstacle  : 
+	     3
+	 3   2   3
+	     0
+
+	                   Pac-Gom        
+	 Pac-Gom          Pac-Man           Pac-Gom        
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(SCORE      -- 140632379086592.19595) 	 Attente d'une Mise à jour du score
+(PACGOM     -- 140632487450368.19595) 	 FIn de la condition 
+(EVENT      -- 140632370693888.19595) 	 - Touche +  !
+(PACMAN     -- 140632479057664.19595) 	 PACMAN vient de mangé une PACGOM 
+(PACGOM     -- 140632487450368.19595) 	 La condition a été activée 
+(SCORE      -- 140632379086592.19595) 	 Une Mise a jour a été effectué
+(PACMAN     -- 140632479057664.19595) 	 PACMAN à été placé en (8,4) vers 500000 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 140632479057664.19595)
+Position  : tab[8][4]
+Direction : Haut 
+Delais : 120 
+score : 12 
+PacGomRestante : 154 
+Nombre De Fantome : 8 
+Obstacle  : 
+	     3
+	 1   2   1
+	     0
+
+	                   Pac-Gom        
+	 Mur              Pac-Man           Mur            
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(PACGOM     -- 140632487450368.19595) 	 FIn de la condition 
+(SCORE      -- 140632379086592.19595) 	 Attente d'une Mise à jour du score
+(PACMAN     -- 140632479057664.19595) 	 PACMAN vient de mangé une PACGOM 
+(PACGOM     -- 140632487450368.19595) 	 La condition a été activée 
+(SCORE      -- 140632379086592.19595) 	 Une Mise a jour a été effectué
+(PACMAN     -- 140632479057664.19595) 	 PACMAN à été placé en (7,4) vers 500000 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 140632479057664.19595)
+Position  : tab[7][4]
+Direction : Haut 
+Delais : 120 
+score : 13 
+PacGomRestante : 153 
+Nombre De Fantome : 8 
+Obstacle  : 
+	     3
+	 1   2   1
+	     0
+
+	                   Pac-Gom        
+	 Mur              Pac-Man           Mur            
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(SCORE      -- 140632379086592.19595) 	 Attente d'une Mise à jour du score
+(PACGOM     -- 140632487450368.19595) 	 FIn de la condition 
+(EVENT      -- 140632370693888.19595) 	 - Touche +  !
+(PACMAN     -- 140632479057664.19595) 	 PACMAN vient de mangé une PACGOM 
+(PACGOM     -- 140632487450368.19595) 	 La condition a été activée 
+(SCORE      -- 140632379086592.19595) 	 Une Mise a jour a été effectué
+(PACMAN     -- 140632479057664.19595) 	 PACMAN à été placé en (6,4) vers 500000 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 140632479057664.19595)
+Position  : tab[6][4]
+Direction : Haut 
+Delais : 100 
+score : 14 
+PacGomRestante : 152 
+Nombre De Fantome : 8 
+Obstacle  : 
+	     3
+	 1   2   1
+	     0
+
+	                   Pac-Gom        
+	 Mur              Pac-Man           Mur            
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(SCORE      -- 140632379086592.19595) 	 Attente d'une Mise à jour du score
+(PACGOM     -- 140632487450368.19595) 	 FIn de la condition 
+(EVENT      -- 140632370693888.19595) 	 - Touche +  !
+(PACMAN     -- 140632479057664.19595) 	 PACMAN vient de mangé une PACGOM 
+(PACGOM     -- 140632487450368.19595) 	 La condition a été activée 
+(SCORE      -- 140632379086592.19595) 	 Une Mise a jour a été effectué
+(PACMAN     -- 140632479057664.19595) 	 PACMAN à été placé en (5,4) vers 500000 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 140632479057664.19595)
+Position  : tab[5][4]
+Direction : Haut 
+Delais : 80 
+score : 15 
+PacGomRestante : 151 
+Nombre De Fantome : 8 
+Obstacle  : 
+	     3
+	 3   2   1
+	     0
+
+	                   Pac-Gom        
+	 Pac-Gom          Pac-Man           Mur            
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(PACGOM     -- 140632487450368.19595) 	 FIn de la condition 
+(SCORE      -- 140632379086592.19595) 	 Attente d'une Mise à jour du score
+(PACMAN     -- 140632479057664.19595) 	 PACMAN vient de mangé une PACGOM 
+(PACGOM     -- 140632487450368.19595) 	 La condition a été activée 
+(SCORE      -- 140632379086592.19595) 	 Une Mise a jour a été effectué
+(PACMAN     -- 140632479057664.19595) 	 PACMAN à été placé en (4,4) vers 500000 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 140632479057664.19595)
+Position  : tab[4][4]
+Direction : Haut 
+Delais : 80 
+score : 16 
+PacGomRestante : 150 
+Nombre De Fantome : 8 
+Obstacle  : 
+	     3
+	 1   2   1
+	     0
+
+	                   Pac-Gom        
+	 Mur              Pac-Man           Mur            
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(SCORE      -- 140632379086592.19595) 	 Attente d'une Mise à jour du score
+(PACGOM     -- 140632487450368.19595) 	 FIn de la condition 
+(EVENT      -- 140632370693888.19595) 	 - Touche +  !
+(PACMAN     -- 140632479057664.19595) 	 PACMAN vient de mangé une PACGOM 
+(PACGOM     -- 140632487450368.19595) 	 La condition a été activée 
+(SCORE      -- 140632379086592.19595) 	 Une Mise a jour a été effectué
+(PACMAN     -- 140632479057664.19595) 	 PACMAN à été placé en (3,4) vers 500000 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 140632479057664.19595)
+Position  : tab[3][4]
+Direction : Haut 
+Delais : 60 
+score : 17 
+PacGomRestante : 149 
+Nombre De Fantome : 8 
+Obstacle  : 
+	     3
+	 3   2   3
+	     0
+
+	                   Pac-Gom        
+	 Pac-Gom          Pac-Man           Pac-Gom        
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(SCORE      -- 140632379086592.19595) 	 Attente d'une Mise à jour du score
+(PACGOM     -- 140632487450368.19595) 	 FIn de la condition 
+(PACMAN     -- 140632479057664.19595) 	 PACMAN vient de mangé une PACGOM 
+(PACGOM     -- 140632487450368.19595) 	 La condition a été activée 
+(SCORE      -- 140632379086592.19595) 	 Une Mise a jour a été effectué
+(PACMAN     -- 140632479057664.19595) 	 PACMAN à été placé en (2,4) vers 500000 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 140632479057664.19595)
+Position  : tab[2][4]
+Direction : Haut 
+Delais : 60 
+score : 18 
+PacGomRestante : 148 
+Nombre De Fantome : 8 
+Obstacle  : 
+	     3
+	 1   2   1
+	     0
+
+	                   Pac-Gom        
+	 Mur              Pac-Man           Mur            
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(SCORE      -- 140632379086592.19595) 	 Attente d'une Mise à jour du score
+(PACGOM     -- 140632487450368.19595) 	 FIn de la condition 
+(EVENT      -- 140632370693888.19595) 	 - Touche +  !
+(PACMAN     -- 140632479057664.19595) 	 PACMAN vient de mangé une PACGOM 
+(PACGOM     -- 140632487450368.19595) 	 La condition a été activée 
+(SCORE      -- 140632379086592.19595) 	 Une Mise a jour a été effectué
+(PACMAN     -- 140632479057664.19595) 	 PACMAN à été placé en (1,4) vers 500000 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 140632479057664.19595)
+Position  : tab[1][4]
+Direction : Haut 
+Delais : 40 
+score : 19 
+PacGomRestante : 147 
+Nombre De Fantome : 8 
+Obstacle  : 
+	     1
+	 3   2   3
+	     0
+
+	                   Mur            
+	 Pac-Gom          Pac-Man           Pac-Gom        
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(SCORE      -- 140632379086592.19595) 	 Attente d'une Mise à jour du score
+(PACGOM     -- 140632487450368.19595) 	 FIn de la condition 
+(PACMAN     -- 140632479057664.19595) 	 PACMAN à été placé en (1,4) vers 500000 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 140632479057664.19595)
+Position  : tab[1][4]
+Direction : Haut 
+Delais : 40 
+score : 19 
+PacGomRestante : 147 
+Nombre De Fantome : 8 
+Obstacle  : 
+	     1
+	 3   2   3
+	     0
+
+	                   Mur            
+	 Pac-Gom          Pac-Man           Pac-Gom        
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(PACMAN     -- 140632479057664.19595) 	 PACMAN à été placé en (1,4) vers 500000 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 140632479057664.19595)
+Position  : tab[1][4]
+Direction : Haut 
+Delais : 40 
+score : 19 
+PacGomRestante : 147 
+Nombre De Fantome : 8 
+Obstacle  : 
+	     1
+	 3   2   3
+	     0
+
+	                   Mur            
+	 Pac-Gom          Pac-Man           Pac-Gom        
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(PACMAN     -- 140632479057664.19595) 	 PACMAN à été placé en (1,4) vers 500000 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 140632479057664.19595)
+Position  : tab[1][4]
+Direction : Haut 
+Delais : 40 
+score : 19 
+PacGomRestante : 147 
+Nombre De Fantome : 8 
+Obstacle  : 
+	     1
+	 3   2   3
+	     0
+
+	                   Mur            
+	 Pac-Gom          Pac-Man           Pac-Gom        
+	                   Vide           
+
+
+ ---------------------------- -------------------------------------------- 
+
+(EVENT      -- 140632370693888.19595) 	 - Flèche gauche !
+
+(SIGINT     -- 140632479057664.19595) 	 Vous etez bien entrer dans le SIGINT PACMAN VA A GAUCHE
+(PACMAN     -- 140632479057664.19595) 	 PACMAN vient de mangé une PACGOM 
+(PACGOM     -- 140632487450368.19595) 	 La condition a été activée 
+(SCORE      -- 140632379086592.19595) 	 Une Mise a jour a été effectué
+(PACMAN     -- 140632479057664.19595) 	 PACMAN à été placé en (1,3) vers 500002 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 140632479057664.19595)
+Position  : tab[1][3]
+Direction : Gauche 
+Delais : 40 
+score : 20 
+PacGomRestante : 146 
+Nombre De Fantome : 8 
+Obstacle  : 
+	     1
+	 3   2   0
+	     1
+
+	                   Mur            
+	 Pac-Gom          Pac-Man           Vide           
+	                   Mur            
+
+
+ ---------------------------- -------------------------------------------- 
+
+(SCORE      -- 140632379086592.19595) 	 Attente d'une Mise à jour du score
+(PACGOM     -- 140632487450368.19595) 	 FIn de la condition 
+(PACMAN     -- 140632479057664.19595) 	 PACMAN vient de mangé une PACGOM 
+(PACGOM     -- 140632487450368.19595) 	 La condition a été activée 
+(SCORE      -- 140632379086592.19595) 	 Une Mise a jour a été effectué
+(PACMAN     -- 140632479057664.19595) 	 PACMAN à été placé en (1,2) vers 500002 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 140632479057664.19595)
+Position  : tab[1][2]
+Direction : Gauche 
+Delais : 40 
+score : 21 
+PacGomRestante : 145 
+Nombre De Fantome : 8 
+Obstacle  : 
+	     1
+	 3   2   0
+	     1
+
+	                   Mur            
+	 Pac-Gom          Pac-Man           Vide           
+	                   Mur            
+
+
+ ---------------------------- -------------------------------------------- 
+
+(SCORE      -- 140632379086592.19595) 	 Attente d'une Mise à jour du score
+(PACGOM     -- 140632487450368.19595) 	 FIn de la condition 
+(PACMAN     -- 140632479057664.19595) 	 PACMAN vient de mangé une PACGOM 
+(PACGOM     -- 140632487450368.19595) 	 La condition a été activée 
+(SCORE      -- 140632379086592.19595) 	 Une Mise a jour a été effectué
+(PACMAN     -- 140632479057664.19595) 	 PACMAN à été placé en (1,1) vers 500002 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 140632479057664.19595)
+Position  : tab[1][1]
+Direction : Gauche 
+Delais : 40 
+score : 22 
+PacGomRestante : 144 
+Nombre De Fantome : 8 
+Obstacle  : 
+	     1
+	 1   2   0
+	     4
+
+	                   Mur            
+	 Mur              Pac-Man           Vide           
+	                   Super Pac-Gom  
+
+
+ ---------------------------- -------------------------------------------- 
+
+(SCORE      -- 140632379086592.19595) 	 Attente d'une Mise à jour du score
+(PACGOM     -- 140632487450368.19595) 	 FIn de la condition 
+(PACMAN     -- 140632479057664.19595) 	 PACMAN à été placé en (1,1) vers 500002 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 140632479057664.19595)
+Position  : tab[1][1]
+Direction : Gauche 
+Delais : 40 
+score : 22 
+PacGomRestante : 144 
+Nombre De Fantome : 8 
+Obstacle  : 
+	     1
+	 1   2   0
+	     4
+
+	                   Mur            
+	 Mur              Pac-Man           Vide           
+	                   Super Pac-Gom  
+
+
+ ---------------------------- -------------------------------------------- 
+
+(PACMAN     -- 140632479057664.19595) 	 PACMAN à été placé en (1,1) vers 500002 dans TAB 
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 140632479057664.19595)
+Position  : tab[1][1]
+Direction : Gauche 
+Delais : 40 
+score : 22 
+PacGomRestante : 144 
+Nombre De Fantome : 8 
+Obstacle  : 
+	     1
+	 1   2   0
+	     4
+
+	                   Mur            
+	 Mur              Pac-Man           Vide           
+	                   Super Pac-Gom  
+
+
+ ---------------------------- -------------------------------------------- 
+
+(EVENT      -- 140632370693888.19595) 	 - Flèche De bas !
+
+(SIGINT     -- 140632479057664.19595) 	 Vous etez bien entrer dans le SIGUSR1 PACMAN VA EN BAS
+(EVENT      -- 140632370693888.19595) 	 - Touche +  !
+(EVENT      -- 140632370693888.19595) 	 - Touche +  !
+(EVENT      -- 140632370693888.19595) 	 - Flèche De bas !
+(EVENT      -- 140632370693888.19595) 	 - Flèche De bas !
+(EVENT      -- 140632370693888.19595) 	 - Flèche De bas !
+(EVENT      -- 140632370693888.19595) 	 Clique sur le bouton Croix 
+(EVENT      -- 140632370693888.19595) 	 EVENT à bien quitté son Thread 
+(PRINCIPALE -- 140632552987520.19595) 	 Attente de 1500 millisecondes...
+(PRINCIPALE -- 140632552987520.19595) 	 Fermeture de la fenetre graphique...
+(BONUS      -- 140632395872000.19595) 	 Fin d'attente de 14 secondes 
+(BONUS      -- 140632395872000.19595) 	 Voici votre vecteur de cases vides
+(BONUS      -- 140632395872000.19595) 	   -   0    =    tab[1,2] 
+(BONUS      -- 140632395872000.19595) 	   -   1    =    tab[1,3] 
+(BONUS      -- 140632395872000.19595) 	   -   2    =    tab[1,4] 
+(BONUS      -- 140632395872000.19595) 	   -   3    =    tab[2,4] 
+(BONUS      -- 140632395872000.19595) 	   -   4    =    tab[3,4] 
+(BONUS      -- 140632395872000.19595) 	   -   5    =    tab[4,4] 
+(BONUS      -- 140632395872000.19595) 	   -   6    =    tab[5,4] 
+(BONUS      -- 140632395872000.19595) 	   -   7    =    tab[6,4] 
+(BONUS      -- 140632395872000.19595) 	   -   8    =    tab[7,4] 
+(BONUS      -- 140632395872000.19595) 	   -   9    =    tab[8,4] 
+(BONUS      -- 140632395872000.19595) 	   -   10    =    tab[9,4] 
+(BONUS      -- 140632395872000.19595) 	   -   11    =    tab[10,4] 
+(BONUS      -- 140632395872000.19595) 	   -   12    =    tab[11,4] 
+(BONUS      -- 140632395872000.19595) 	   -   13    =    tab[12,4] 
+(BONUS      -- 140632395872000.19595) 	   -   14    =    tab[13,4] 
+(BONUS      -- 140632395872000.19595) 	   -   15    =    tab[14,4] 
+(BONUS      -- 140632395872000.19595) 	   -   16    =    tab[15,4] 
+(BONUS      -- 140632395872000.19595) 	   -   17    =    tab[15,5] 
+(BONUS      -- 140632395872000.19595) 	   -   18    =    tab[15,6] 
+(BONUS      -- 140632395872000.19595) 	   -   19    =    tab[15,7] 
+(BONUS      -- 140632395872000.19595) 	   -   20    =    tab[15,8] 

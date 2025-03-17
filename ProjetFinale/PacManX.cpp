@@ -1013,7 +1013,7 @@ void *FonctionCompteurFantome()
 
   int couleurs[8] = {ROUGE, ROUGE, VERT, VERT, ORANGE, ORANGE, MAUVE, MAUVE};
 
-  for (int i = 0; i < 2; i++)
+  for (int i = 0; i < 8; i++)
   {
 
     S_FANTOME *fantome = InitFantom(9, 8, 0, couleurs[i]);
@@ -1322,7 +1322,7 @@ void FonctionFinFantome(void *param)
 
 
 
-  //pthread_cond_signal(&condNbFantomes);
-
+  pthread_cond_signal(&condNbFantomes);
+  pthread_exit(NULL);
 
 }
