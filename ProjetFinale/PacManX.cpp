@@ -642,9 +642,9 @@ void *FonctionPacMan()
 
   fprintf(stderr, "(PACMAN     -- %lu.%d) \t PACMAN rentre dans la boucle d'avance auto. \n", pthread_self(), getpid());
 
-  Attente(300);
-
-
+  // pthread_mutex_lock(&mutexNbPacGom);
+  // pthread_cond_wait(&condPacToutePlacer, &mutexNbPacGom);
+  // pthread_mutex_unlock(&mutexNbPacGom);
 
   while (gameRunning)
   {
@@ -776,7 +776,6 @@ void *FonctionPacMan()
       pthread_cond_wait(&condPacToutePlacer,&mutexNbPacGom);
       pthread_mutex_unlock(&mutexNbPacGom);
       sigprocmask(SIG_SETMASK, &ancien_masque, NULL);
-
     }
 
     fprintf(stderr, "(PACMAN     -- %lu.%d) \t PACMAN à été placé en (%d,%d) vers %d dans TAB \n", pthread_self(), getpid(), L, C, dir);
@@ -1038,12 +1037,13 @@ void *FonctionCompteurFantome()
 
   while (gameRunning)
   {
-    while (nbRouge == 2 && nbVert == 2 && nbMauve == 2 && nbOrange == 2)
+    while (nbRouge == 2 && nbVert == 2 && nbOrange == 2 && nbMauve == 2)
     {
       pthread_mutex_lock(&mutexNbFantomes); // Verrouille le mutex avant d'attendre
       pthread_cond_wait(&condNbFantomes, &mutexNbFantomes);
       fprintf(stderr, "(CPTFANTOME -- %lu.%d) \t J'ai bien été reveillé a la mort d'un fantome");
       pthread_mutex_unlock(&mutexNbFantomes); // Verrouille le mutex avant d'attendre
+  
     }
 
 
@@ -1051,21 +1051,25 @@ void *FonctionCompteurFantome()
     {
       S_FANTOME *fantome = InitFantom(9, 8, 0, ROUGE);
       pthread_create(&ThreadFantome[7], NULL, (void *(*)(void *))FonctionFantome, (void *)fantome);
+      nbRouge++;
     }
     if (nbVert < 2)
     {
       S_FANTOME *fantome = InitFantom(9, 8, 0, VERT);
       pthread_create(&ThreadFantome[7], NULL, (void *(*)(void *))FonctionFantome, (void *)fantome);
+      nbVert++;
     }
     if (nbOrange < 2)
     {
       S_FANTOME *fantome = InitFantom(9, 8, 0, ORANGE);
       pthread_create(&ThreadFantome[7], NULL, (void *(*)(void *))FonctionFantome, (void *)fantome);
+      nbOrange++;
     }
     if (nbMauve < 2)
     {
       S_FANTOME *fantome = InitFantom(9, 8, 0, MAUVE);
       pthread_create(&ThreadFantome[7], NULL, (void *(*)(void *))FonctionFantome, (void *)fantome);
+      nbMauve++;
     }
   }
 
