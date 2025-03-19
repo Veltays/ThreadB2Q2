@@ -205,15 +205,14 @@ int main(int argc, char *argv[])
   pthread_create(&ThreadBonus, NULL, (void *(*)(void *))FonctionBonus, NULL);
   pthread_create(&threadCompteurFantomes, NULL, (void *(*)(void *))FonctionCompteurFantome, NULL);
   pthread_create(&ThreadScore, NULL, (void *(*)(void *))FonctionScore, NULL);
-
+  pthread_create(&ThreadEvent, NULL, (void *(*)(void *))FonctionEvent, NULL);
 
   /*
    ? Attente de la morts des threads
     * Attente de la mort du thread EVENT qui ne retourne rien
 
   */
-
-  pthread_join(ThreadVie,NULL);
+  pthread_join(ThreadEvent, NULL);
   /*Fin du programme*/
 
   fprintf(stderr, "(PRINCIPALE -- %lu.%d) \t Attente de 1500 millisecondes...\n", pthread_self(), getpid());
@@ -1094,7 +1093,7 @@ void *FonctionFantome(void *arg)
 
 
 
-  while (true)
+  while (gameRunning)
   {
     
     pthread_mutex_lock(&mutexTab);
@@ -1126,7 +1125,6 @@ void *FonctionFantome(void *arg)
     }
     pthread_mutex_unlock(&mutexTab);
 
-
     switch (dirFantome)
     {
 
@@ -1141,22 +1139,24 @@ void *FonctionFantome(void *arg)
           pthread_testcancel();
         }
       }
-      if (tab[fantome->L][fantome->C - 1].presence != MUR && tab[fantome->L][fantome->C - 1].presence != FANTOME)
-      {
-        fantome->cache = tab[fantome->L][fantome->C - 1].presence; //On sauvegarde la case d'après
-        fprintf(stderr, "(FANTOME   -- %lu.%d) \t On avait dans la case tab[%d][%d] un %s \n", pthread_self(), getpid(), fantome->L, fantome->C, presence_nom(tab[fantome->L][fantome->C - 1].presence));
-        fantome->C--;
-      }
       else
       {
-        dirFantome = CaseAleatoire(fantome);
-        fprintf(stderr, "(FANTOME   -- %lu.%d) \t Nouvelle direction %d - %s \n", pthread_self(), getpid(), dirFantome, posiPac(dirFantome));
+        if (tab[fantome->L][fantome->C - 1].presence != MUR && tab[fantome->L][fantome->C - 1].presence != FANTOME)
+        {
+          fantome->cache = tab[fantome->L][fantome->C - 1].presence; //On sauvegarde la case d'après
+          fprintf(stderr, "(FANTOME   -- %lu.%d) \t On avait dans la case tab[%d][%d] un %s \n", pthread_self(), getpid(), fantome->L, fantome->C, presence_nom(tab[fantome->L][fantome->C - 1].presence));
+          fantome->C--;
+        }
+        else
+        {
+          dirFantome = CaseAleatoire(fantome);
+          fprintf(stderr, "(FANTOME   -- %lu.%d) \t Nouvelle direction %d - %s \n", pthread_self(), getpid(), dirFantome, posiPac(dirFantome));
+        }
       }
       break;
 
-
     case (DROITE):
-      if (tab[fantome->L][fantome->C +1].presence == PACMAN)
+      if (tab[fantome->L][fantome->C + 1].presence == PACMAN)
       {
         if (mode == 1)
           pthread_cancel(ThreadPacMan);
@@ -1166,20 +1166,22 @@ void *FonctionFantome(void *arg)
           pthread_testcancel();
         }
       }
-      if (tab[fantome->L][fantome->C + 1].presence != MUR && tab[fantome->L][fantome->C + 1].presence != FANTOME)
-      {
-        fantome->cache = tab[fantome->L][fantome->C + 1].presence; //On sauvegarde la case d'après
-        //fprintf(stderr, "(FANTOME   -- %lu.%d) \t On avait dans la case tab[%d][%d] un %s \n", pthread_self(), getpid(), fantome->L, fantome->C + 1, presence_nom(tab[fantome->L][fantome->C + 1].presence));
-
-        fantome->C++;
-      }
       else
       {
-        dirFantome = CaseAleatoire(fantome);
-        //fprintf(stderr, "(FANTOME   -- %lu.%d) \t Nouvelle direction %d - %s \n", pthread_self(), getpid(), dirFantome, posiPac(dirFantome));
+        if (tab[fantome->L][fantome->C + 1].presence != MUR && tab[fantome->L][fantome->C + 1].presence != FANTOME)
+        {
+          fantome->cache = tab[fantome->L][fantome->C + 1].presence; //On sauvegarde la case d'après
+          //fprintf(stderr, "(FANTOME   -- %lu.%d) \t On avait dans la case tab[%d][%d] un %s \n", pthread_self(), getpid(), fantome->L, fantome->C + 1, presence_nom(tab[fantome->L][fantome->C + 1].presence));
+
+          fantome->C++;
+        }
+        else
+        {
+          dirFantome = CaseAleatoire(fantome);
+          //fprintf(stderr, "(FANTOME   -- %lu.%d) \t Nouvelle direction %d - %s \n", pthread_self(), getpid(), dirFantome, posiPac(dirFantome));
+        }
       }
       break;
-
 
     case (HAUT):
       if (tab[fantome->L - 1][fantome->C].presence == PACMAN)
@@ -1192,20 +1194,22 @@ void *FonctionFantome(void *arg)
           pthread_testcancel();
         }
       }
-      if (tab[fantome->L - 1][fantome->C].presence != MUR && tab[fantome->L - 1][fantome->C].presence != FANTOME)
-      {
-        fantome->cache = tab[fantome->L - 1][fantome->C].presence; //On sauvegarde la case d'après
-        //fprintf(stderr, "(FANTOME   -- %lu.%d) \t On avait dans la case tab[%d][%d] un %s \n", pthread_self(), getpid(), fantome->L - 1, fantome->C, presence_nom(tab[fantome->L - 1][fantome->C].presence));
-
-        fantome->L--;
-      }
       else
       {
-        dirFantome = CaseAleatoire(fantome);
-        //fprintf(stderr, "(FANTOME   -- %lu.%d) \t Nouvelle direction %d - %s \n", pthread_self(), getpid(), dirFantome, posiPac(dirFantome));
+        if (tab[fantome->L - 1][fantome->C].presence != MUR && tab[fantome->L - 1][fantome->C].presence != FANTOME)
+        {
+          fantome->cache = tab[fantome->L - 1][fantome->C].presence; //On sauvegarde la case d'après
+          //fprintf(stderr, "(FANTOME   -- %lu.%d) \t On avait dans la case tab[%d][%d] un %s \n", pthread_self(), getpid(), fantome->L - 1, fantome->C, presence_nom(tab[fantome->L - 1][fantome->C].presence));
+
+          fantome->L--;
+        }
+        else
+        {
+          dirFantome = CaseAleatoire(fantome);
+          //fprintf(stderr, "(FANTOME   -- %lu.%d) \t Nouvelle direction %d - %s \n", pthread_self(), getpid(), dirFantome, posiPac(dirFantome));
+        }
       }
       break;
-
 
     case (BAS):
       if (tab[fantome->L + 1][fantome->C].presence == PACMAN)
@@ -1218,21 +1222,24 @@ void *FonctionFantome(void *arg)
           pthread_testcancel();
         }
       }
-      if (tab[fantome->L + 1][fantome->C].presence != MUR && tab[fantome->L + 1][fantome->C].presence != FANTOME)
-      {
-        fantome->cache = tab[fantome->L + 1][fantome->C].presence; //On sauvegarde la case d'après
-        //fprintf(stderr, "(FANTOME   -- %lu.%d) \t On avait dans la case tab[%d][%d] un %s \n", pthread_self(), getpid(), fantome->L + 1, fantome->C, presence_nom(tab[fantome->L + 1][fantome->C].presence));
-        fantome->L++;
-      }
       else
       {
-        dirFantome = CaseAleatoire(fantome);
-        //fprintf(stderr, "(FANTOME   -- %lu.%d) \t Nouvelle direction %d - %s \n", pthread_self(), getpid(), dirFantome, posiPac(dirFantome));
+        if (tab[fantome->L + 1][fantome->C].presence != MUR && tab[fantome->L + 1][fantome->C].presence != FANTOME)
+        {
+          fantome->cache = tab[fantome->L + 1][fantome->C].presence; //On sauvegarde la case d'après
+          //fprintf(stderr, "(FANTOME   -- %lu.%d) \t On avait dans la case tab[%d][%d] un %s \n", pthread_self(), getpid(), fantome->L + 1, fantome->C, presence_nom(tab[fantome->L + 1][fantome->C].presence));
+          fantome->L++;
+        }
+        else
+        {
+          dirFantome = CaseAleatoire(fantome);
+          //fprintf(stderr, "(FANTOME   -- %lu.%d) \t Nouvelle direction %d - %s \n", pthread_self(), getpid(), dirFantome, posiPac(dirFantome));
+        }
       }
     }
   }
 
-    pthread_cleanup_pop(0);
+    pthread_cleanup_pop(1);
     pthread_exit(NULL);
 }
 
@@ -1247,11 +1254,8 @@ void * FonctionVie()
     DessineChiffre(18,22,vie);
     fprintf(stderr, "(VIEPAC  -- %lu.%d) Création du ThreadPacMan \t ", pthread_self(), getpid());
     pthread_create(&ThreadPacMan, NULL, (void *(*)(void *))FonctionPacMan, NULL);
-    pthread_create(&ThreadEvent, NULL, (void *(*)(void *))FonctionEvent, NULL);
  
-
     pthread_join(ThreadPacMan, NULL);
-    pthread_cancel(ThreadEvent);
 
     vie--;
     fprintf(stderr, "(VIEPAC  -- %lu.%d) \t On a bien recu la mort du Thread Pacman Nombre de vie restante %d \n  ", pthread_self(), getpid(), vie);
@@ -1262,7 +1266,7 @@ void * FonctionVie()
 
   DessineChiffre(18,22,vie);
   DessineGameOver(9,4);
-
+  gameRunning = false;
 
   pthread_exit(NULL);
 }
@@ -1331,7 +1335,7 @@ void FonctionFinPacman(void *)
 {
 
   fprintf(stderr, "(FINPACMAN) PACMAN EST MORT On efface la case tab[%d][%d]  qui avait comme présence %s \n",L,C,presence_nom(tab[L][C].presence));
-  
+
   pthread_mutex_lock(&mutexTab);
   setTab(L, C, VIDE);
   EffaceCarre(L, C);
