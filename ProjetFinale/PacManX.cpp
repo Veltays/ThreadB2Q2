@@ -51,15 +51,15 @@ int nbPacGom = 0;  //! Nombre de PacGom et de SuperPACGOM présente dans la gril
 int NiveauJeu = 0; //! Variable contenant le niveau du eu
 int score = 0;
 bool MAJScore = false;
-int mode = 1;
+int mode = 2;
 
 int nbFantome = 0;
 pthread_key_t cle;
 
-int nbRouge = 0;
-int nbVert = 0;
-int nbOrange = 0;
-int nbMauve = 0;
+int nbRouge = 2;
+int nbVert = 2;
+int nbOrange = 2;
+int nbMauve = 2;
 
 // Différent thread
 pthread_t ThreadPacMan;           //! Handler du thread PACMAN (notre personnage)
@@ -295,19 +295,22 @@ void PacInfo()
 
   fprintf(stderr, "\n\n ---------------------------- PAC INFO ----------------------------------- \n");
   fprintf(stderr, "(PACMAN     -- %lu.%d)\n", pthread_self(), getpid());
-  fprintf(stderr, "Position  : tab[%d][%d]\n", L, C);
-  fprintf(stderr, "Direction : %s \n", posiPac(dir));
-  fprintf(stderr, "Delais : %d \n", delais);
-  fprintf(stderr, "score : %d \n", score);
-  fprintf(stderr, "PacGomRestante : %d \n", nbPacGom);
-  fprintf(stderr, "Nombre De Fantome : %d \n", nbFantome);
-  fprintf(stderr, "GameRunning: %d \n", gameRunning);
+  fprintf(stderr, "Position  :          tab[%d][%d] \n", L, C);
+  fprintf(stderr, "Direction :          %s \n", posiPac(dir));
+  fprintf(stderr, "Delais :             %d \n", delais);
+  fprintf(stderr, "score :              %d \n", score);
+  fprintf(stderr, "PacGomRestante :     %d \n", nbPacGom);
+  fprintf(stderr, "Nombre De Fantome :  %d \n", nbFantome);
+  fprintf(stderr, "NbVert:              %d \n", nbVert);
+  fprintf(stderr, "NbMauve:             %d \n", nbMauve);
+  fprintf(stderr, "NbOrange:            %d \n", nbOrange);
+  fprintf(stderr, "nbRouge:             %d \n", nbRouge);
+  fprintf(stderr, "GameRunning:         %d \n", gameRunning);
   fprintf(stderr, "Obstacle  : \n");
   fprintf(stderr, "\t     %d\n", tab[L - 1][C].presence);
   fprintf(stderr, "\t %d   %d   %d\n", tab[L][C - 1].presence, tab[L][C].presence, tab[L][C + 1].presence);
   fprintf(stderr, "\t     %d\n", tab[L + 1][C].presence);
   fprintf(stderr, "\n");
-
   fprintf(stderr, "\t                   %-15s\n", presence_nom(tab[L - 1][C].presence));
   fprintf(stderr, "\t %-15s  %-15s   %-15s\n",
           presence_nom(tab[L][C - 1].presence),
@@ -486,10 +489,10 @@ int CaseAleatoire(S_FANTOME *fantome)
   int vect[4];
   int cpt = 0;
 
-  fprintf(stderr, "(DEBUG) DROITE  = %s\n", presence_nom(tab[fantome->L][fantome->C + 1].presence));
-  fprintf(stderr, "(DEBUG) GAUCHE  = %s\n", presence_nom(tab[fantome->L][fantome->C - 1].presence));
-  fprintf(stderr, "(DEBUG) BAS     = %s\n", presence_nom(tab[fantome->L + 1][fantome->C].presence));
-  fprintf(stderr, "(DEBUG) HAUT    = %s\n", presence_nom(tab[fantome->L - 1][fantome->C].presence));
+  // fprintf(stderr, "(DEBUG) DROITE  = %s\n", presence_nom(tab[fantome->L][fantome->C + 1].presence));
+  // fprintf(stderr, "(DEBUG) GAUCHE  = %s\n", presence_nom(tab[fantome->L][fantome->C - 1].presence));
+  // fprintf(stderr, "(DEBUG) BAS     = %s\n", presence_nom(tab[fantome->L + 1][fantome->C].presence));
+  // fprintf(stderr, "(DEBUG) HAUT    = %s\n", presence_nom(tab[fantome->L - 1][fantome->C].presence));
 
   if (tab[fantome->L][fantome->C + 1].presence != MUR)
   {
@@ -516,12 +519,12 @@ int CaseAleatoire(S_FANTOME *fantome)
 
   if (cpt == 0)
   {
-    fprintf(stderr, "(DEBUG) Aucune case disponible, retour direction par défaut.\n");
+    //fprintf(stderr, "(DEBUG) Aucune case disponible, retour direction par défaut.\n");
     return -1; // Ou une direction par défaut
   }
 
   int choix = rand() % cpt;
-  fprintf(stderr, "(DEBUG) Direction choisie:  %s\n", posiPac(vect[choix]));
+ // fprintf(stderr, "(DEBUG) Direction choisie:  %s\n", posiPac(vect[choix]));
 
   return vect[choix];
 }
@@ -1042,28 +1045,28 @@ void *FonctionCompteurFantome()
       fprintf(stderr, "(CPTFANTOME -- %lu.%d) \t J'ai bien été reveillé a la mort d'un fantome");
       pthread_mutex_unlock(&mutexNbFantomes); // Verrouille le mutex avant d'attendre
     }
-     pthread_cond_wait(&condNbFantomes, &mutexNbFantomes);
 
-    // if (nbRouge < 2)
-    // {
-    //   S_FANTOME *fantome = InitFantom(9, 8, 0, ROUGE);
-    //   pthread_create(&ThreadFantome[7], NULL, (void *(*)(void *))FonctionFantome, (void *)fantome);
-    // }
-    // if (nbVert < 2)
-    // {
-    //   S_FANTOME *fantome = InitFantom(9, 8, 0, VERT);
-    //   pthread_create(&ThreadFantome[7], NULL, (void *(*)(void *))FonctionFantome, (void *)fantome);
-    // }
-    // if (nbOrange < 2)
-    // {
-    //   S_FANTOME *fantome = InitFantom(9, 8, 0, ORANGE);
-    //   pthread_create(&ThreadFantome[7], NULL, (void *(*)(void *))FonctionFantome, (void *)fantome);
-    // }
-    // if (nbMauve < 2)
-    // {
-    //   S_FANTOME *fantome = InitFantom(9, 8, 0, MAUVE);
-    //   pthread_create(&ThreadFantome[7], NULL, (void *(*)(void *))FonctionFantome, (void *)fantome);
-    // }
+
+    if (nbRouge < 2)
+    {
+      S_FANTOME *fantome = InitFantom(9, 8, 0, ROUGE);
+      pthread_create(&ThreadFantome[7], NULL, (void *(*)(void *))FonctionFantome, (void *)fantome);
+    }
+    if (nbVert < 2)
+    {
+      S_FANTOME *fantome = InitFantom(9, 8, 0, VERT);
+      pthread_create(&ThreadFantome[7], NULL, (void *(*)(void *))FonctionFantome, (void *)fantome);
+    }
+    if (nbOrange < 2)
+    {
+      S_FANTOME *fantome = InitFantom(9, 8, 0, ORANGE);
+      pthread_create(&ThreadFantome[7], NULL, (void *(*)(void *))FonctionFantome, (void *)fantome);
+    }
+    if (nbMauve < 2)
+    {
+      S_FANTOME *fantome = InitFantom(9, 8, 0, MAUVE);
+      pthread_create(&ThreadFantome[7], NULL, (void *(*)(void *))FonctionFantome, (void *)fantome);
+    }
   }
 
   pthread_exit(NULL);
@@ -1126,10 +1129,8 @@ void *FonctionFantome(void *arg)
 
     if(gameRunning == true)
     {
-
     switch (dirFantome)
     {
-
     case (GAUCHE):
       if (tab[fantome->L][fantome->C - 1].presence == PACMAN)
       {
@@ -1239,6 +1240,7 @@ void *FonctionFantome(void *arg)
         }
       }
     }
+
     }
   }
 
