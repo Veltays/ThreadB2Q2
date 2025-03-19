@@ -1359,4 +1359,14 @@ void FonctionFinPacman(void *)
   setTab(L, C, VIDE);
   EffaceCarre(L, C);
   pthread_mutex_unlock(&mutexTab);
+
+   if (pthread_mutex_trylock(&mutexDelais) == 0)
+     {
+        fprintf(stderr, "(PACMAN -- %lu) 🔓 J'ai réussi à lock mutexDelais avec trylock !\n", pthread_self());
+
+    } else {
+        fprintf(stderr, "(PACMAN -- %lu) 🚨 mutexDelais est déjà verrouillé par un autre thread !\n", pthread_self());
+        pthread_mutex_unlock(&mutexDelais);
+    }
+  
 }
