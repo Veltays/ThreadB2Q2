@@ -1093,7 +1093,7 @@ void *FonctionFantome(void *arg)
 
 
 
-  while (gameRunning)
+  while (true)
   {
     
     pthread_mutex_lock(&mutexTab);
@@ -1102,7 +1102,6 @@ void *FonctionFantome(void *arg)
     pthread_mutex_unlock(&mutexTab);
 
     Attente(delaisFantome);
-
 
     pthread_mutex_lock(&mutexTab);
     setTab(fantome->L, fantome->C, fantome->cache); //On remet l'ancienne case pour pas bouffer les PACGOM
@@ -1124,6 +1123,9 @@ void *FonctionFantome(void *arg)
       break;
     }
     pthread_mutex_unlock(&mutexTab);
+
+    if(gameRunning == true)
+    {
 
     switch (dirFantome)
     {
@@ -1236,6 +1238,7 @@ void *FonctionFantome(void *arg)
           //fprintf(stderr, "(FANTOME   -- %lu.%d) \t Nouvelle direction %d - %s \n", pthread_self(), getpid(), dirFantome, posiPac(dirFantome));
         }
       }
+    }
     }
   }
 
