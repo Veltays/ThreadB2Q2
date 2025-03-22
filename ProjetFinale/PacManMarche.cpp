@@ -51,8 +51,9 @@ int nbPacGom = 0;  //! Nombre de PacGom et de SuperPACGOM présente dans la gril
 int NiveauJeu = 0; //! Variable contenant le niveau du eu
 int score = 0;
 bool MAJScore = false;
-int mode = 1;
+int mode = 2;
 bool pacGomPlacees = false;
+
 int nbFantome = 0;
 pthread_key_t cle;
 
@@ -462,21 +463,20 @@ void PlacerPacGom()
 
   sigprocmask(SIG_BLOCK, &masque, &ancien_masque);
 
-
-
-
-  int tempPacGom = 0;
   //On place les superPacGpm
   int VecteurSuperPacGOM[4][2] = {{2, 1}, {2, 15}, {15, 1}, {15, 15}};
   for (int k = 0; k < 4; k++)
   {
-    fprintf(stderr, "(PACGOM     -- %lu.%d) \t Je place la SUPERPACGOM EN tab[%d][%d] \n", pthread_self(), getpid(), VecteurSuperPacGOM[k][0], VecteurSuperPacGOM[k][1]);
-    setTab(VecteurSuperPacGOM[k][0], VecteurSuperPacGOM[k][1], SUPERPACGOM, pthread_self());
-    DessineSuperPacGom(VecteurSuperPacGOM[k][0], VecteurSuperPacGOM[k][1]);
-    tempPacGom++;
+      if (tab[VecteurSuperPacGOM[k][0]][VecteurSuperPacGOM[k][1]].presence == VIDE ) //|| tab[i][j].presence == FANTOME || tab[i][j].presence == BONUS)
+      {
+      //fprintf(stderr, "(PACGOM     -- %lu.%d) \t Je place la SUPERPACGOM EN tab[%d][%d] \n", pthread_self(), getpid(), VecteurSuperPacGOM[k][0], VecteurSuperPacGOM[k][1]);
+      setTab(VecteurSuperPacGOM[k][0], VecteurSuperPacGOM[k][1], SUPERPACGOM, pthread_self());
+      DessineSuperPacGom(VecteurSuperPacGOM[k][0], VecteurSuperPacGOM[k][1]);
+      pthread_mutex_lock(&mutexNbPacGom);
+      nbPacGom++;
+      pthread_mutex_unlock(&mutexNbPacGom);
+      }
   }
-
-
   //On place les pacgom
   for (int i = 0; i < NB_LIGNE; i++)
   {
@@ -486,23 +486,27 @@ void PlacerPacGom()
       {
         if (((i == 8 || i == 9 || i == 15) && j == 8))
         {
-          fprintf(stderr, "(PACGOM     -- %lu.%d) \t Pas de PACGOM placé en tab[%d][%d] car Nid ou Plce Pacman \n", pthread_self(), getpid(), i, j);
+          fprintf(stderr, "(PACGOM     -- %lu.%d) \t Pas de PACGOM placé en tab[%d][%d] \n", pthread_self(), getpid(), i, j);
         }
         else
         {
+
           if (tab[i][j].presence == FANTOME)
           {
             pthread_t temp = tab[i][j].tid;
             pthread_kill(temp,SIGPWR);
             pthread_join(temp,NULL);
             fprintf(stderr, "(PACGOM     -- %lu.%d) \t Le thread FANTOME placé en tab[%d][%d] à bien été terminé \n", pthread_self(), getpid(), i, j);
+            fprintf(stderr, "(PACGOM     -- %lu.%d) \t  PACGOM lock son mutex après avoir tuer les fantomes correctement\n", pthread_self(), getpid());
           }
 
+          //fprintf(stderr, "(PACGOM     -- %lu.%d) \t Je place la PACGOM EN tab[%d][%d] \n", pthread_self(), getpid(), i, j);
 
-          fprintf(stderr, "(PACGOM     -- %lu.%d) \t Je place la PACGOM EN tab[%d][%d] \n", pthread_self(), getpid(), i, j);
           setTab(i, j, PACGOM);
           DessinePacGom(i, j);
-          tempPacGom++;
+          pthread_mutex_lock(&mutexNbPacGom);
+          nbPacGom++;
+          pthread_mutex_unlock(&mutexNbPacGom);
         }
       }
       else
@@ -511,10 +515,6 @@ void PlacerPacGom()
       }
     }
   }
-
-  pthread_mutex_lock(&mutexNbPacGom);
-  nbPacGom = tempPacGom;
-  pthread_mutex_unlock(&mutexNbPacGom);
 
   //fprintf(stderr, "(PACGOM     -- %lu.%d) \t  PACGOM unlock son mutex pour placer les PacGoms \n", pthread_self(), getpid());
 
@@ -534,45 +534,44 @@ void PlacerPacGom()
 
 void MangerPacGom(int Type)
 {
-
-  int scoretemp = 0;
-  int nbPacGomTemp = 0;
-
-  switch (Type)
+  if (Type == PACGOM)
   {
-  case PACGOM:
-    fprintf(stderr, "(PACMAN     -- %lu.%d) \t PACMAN vient de manger une PACGOM \n", pthread_self(), getpid());
-    nbPacGomTemp = -1;
-    scoretemp = 1;
-    break;
+    //fprintf(stderr, "(PACMAN     -- %lu.%d) \t PACMAN s'apprete à mangé une PACGOM \n", pthread_self(), getpid());
+    pthread_mutex_lock(&mutexNbPacGom);
+    nbPacGom--;
+    pthread_cond_signal(&condNbPacGom);
+    pthread_mutex_unlock(&mutexNbPacGom);
 
-  case SUPERPACGOM:
-    fprintf(stderr, "(PACMAN     -- %lu.%d) \t PACMAN vient de manger une SUPERPACGOM \n", pthread_self(), getpid());
-    nbPacGomTemp = -1;
-    scoretemp = 5;
-    break;
-
-  case BONUS:
-    fprintf(stderr, "(PACMAN     -- %lu.%d) \t PACMAN vient de manger un BONUS \n", pthread_self(), getpid());
-    scoretemp = 30;
-    break;
+    pthread_mutex_lock(&mutexScore);
+    score += 1;
+    MAJScore = true;
+    pthread_cond_signal(&condScore);
+    pthread_mutex_unlock(&mutexScore);
+    //fprintf(stderr, "(PACMAN     -- %lu.%d) \t PACMAN vient de mangé une PACGOM \n", pthread_self(), getpid());
   }
 
-  if (scoretemp > 0)
+  if (Type == SUPERPACGOM)
   {
+    //fprintf(stderr, "(PACMAN     -- %lu.%d) \t PACMAN vient de mangé une SUPERPACGOM \n", pthread_self(), getpid());
+    pthread_mutex_lock(&mutexNbPacGom);
+    nbPacGom--;
+    pthread_cond_signal(&condNbPacGom);
+    pthread_mutex_unlock(&mutexNbPacGom);
+
     pthread_mutex_lock(&mutexScore);
-    score += scoretemp;
+    score += 5;
     MAJScore = true;
     pthread_cond_signal(&condScore);
     pthread_mutex_unlock(&mutexScore);
   }
-
-  if (nbPacGomTemp != 0)
+  if (Type == BONUS)
   {
-    pthread_mutex_lock(&mutexNbPacGom);
-    nbPacGom += nbPacGomTemp;
-    pthread_cond_signal(&condNbPacGom);
-    pthread_mutex_unlock(&mutexNbPacGom);
+    //fprintf(stderr, "(PACMAN     -- %lu.%d) \t PACMAN vient de mangé un BONUS \n", pthread_self(), getpid());
+    pthread_mutex_lock(&mutexScore);
+    score += 30;
+    MAJScore = true;
+    pthread_cond_signal(&condScore);
+    pthread_mutex_unlock(&mutexScore);
   }
 }
 
@@ -676,7 +675,7 @@ int MovePacMan(int newL, int newC)
       break;
     case FANTOME:
       if (mode == 1)
-        pthread_kill(ThreadPacMan,SIGCONT);
+        pthread_cancel(pthread_self());
       if (mode == 2)
       {
         pthread_kill(tab[newL][newC].tid, SIGPWR);
@@ -790,6 +789,7 @@ void *FonctionPacMan()
       }
 
     // On dessine que si, il reste des PACGOM
+
 
 
     if (nbPacGom < 0)
@@ -1268,15 +1268,15 @@ void *FonctionVie()
   while (vie > 0 && gameRunning)
   {
     DessineChiffre(18, 22, vie);
-    fprintf(stderr, "(VIEPAC  -- %lu.%d) Création du ThreadPacMan \t ", pthread_self(), getpid());
+    //fprintf(stderr, "(VIEPAC  -- %lu.%d) Création du ThreadPacMan \t ", pthread_self(), getpid());
     pthread_create(&ThreadPacMan, NULL, (void *(*)(void *))FonctionPacMan, NULL);
 
-    fprintf(stderr, "(VIEPAC     -- %lu.%d) \t PACMAN à été placé en (%d,%d) vers %d dans TAB \n", pthread_self(), getpid(), L, C, dir);
+    //fprintf(stderr, "(VIEPAC     -- %lu.%d) \t PACMAN à été placé en (%d,%d) vers %d dans TAB \n", pthread_self(), getpid(), L, C, dir);
 
     pthread_join(ThreadPacMan, NULL);
 
     vie--;
-    fprintf(stderr, "(VIEPAC  -- %lu.%d) \t On a bien recu la mort du Thread Pacman Nombre de vie restante %d \n  ", pthread_self(), getpid(), vie);
+    //fprintf(stderr, "(VIEPAC  -- %lu.%d) \t On a bien recu la mort du Thread Pacman Nombre de vie restante %d \n  ", pthread_self(), getpid(), vie);
   }
 
   DessineChiffre(18, 22, vie);
@@ -1326,15 +1326,22 @@ void HandlerSIGUSR2(int sig)
 
 void HandlerSIGCONT(int sig) //Fin pacman
 {
-  fprintf(stderr, "(FINPACMAN) PACMAN EST MORT On efface la case tab[%d][%d]  qui avait comme présence %s \n", L, C, presence_nom(tab[L][C].presence));
 
+  //fprintf(stderr, "(FINPACMAN) PACMAN EST MORT On efface la case tab[%d][%d]  qui avait comme présence %s \n", L, C, presence_nom(tab[L][C].presence));
 
-  fprintf(stderr, "(FINPACMAN) PACMAN en étant mort, LOCK SON mutex tab\n");
-  setTab(L, C, VIDE);
-  EffaceCarre(L, C);
-  fprintf(stderr, "(FINPACMAN) PACMAN en étant mort, UNLOCK SON mutex tab\n");
-  pthread_mutex_unlock(&mutexTab);
-  pthread_exit(NULL);
+  if (pthread_mutex_trylock(&mutexTab) == 0)
+  {
+    //fprintf(stderr, "(FINPACMAN) PACMAN en étant mort, LOCK SON mutex tab\n");
+    setTab(L, C, VIDE);
+    EffaceCarre(L, C);
+    //fprintf(stderr, "(FINPACMAN) PACMAN en étant mort, UNLOCK SON mutex tab\n");
+    pthread_mutex_unlock(&mutexTab);
+  }
+  else
+  {
+    //fprintf(stderr, "(FINPACMAN) Impossible de lock mutexTab, tentative plus tard...\n");
+  }
+    pthread_exit(NULL);
 }
 
 void HandlerSIGPWR(int sig) // FinFantome
