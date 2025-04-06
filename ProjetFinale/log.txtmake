@@ -1,0 +1,48 @@
+Script démarré sur 2025-04-06 13:06:36+02:00
+TabLock3
+
+
+
+
+ ---------------------------- PAC INFO ----------------------------------- 
+(PACMAN     -- 139828255500032.3581)
+Donnée PACMAN 
+  - TID            : 0 
+  - présence       : Vide 
+  - Position            tab[15][8] 
+  - Direction          : Gauche 
+Niveau             : 1 
+nbVie              : 3 
+Delais             : 300 
+score              : 0 
+PacGomRestante     : 0 
+Temp Bonus         : 0 
+mode               : 1 
+Nombre De Fantome  : 0 
+GameRunning        : 1 
+  - NbVert           : 2 
+  - NbMauve          : 2 
+  - NbOrange         : 2 
+  - nbRouge          : 2 
+État des Mutex :
+  - mutexTab          : Verrouillé
+  - mutexDir          : Libre
+  - mutexNbPacGom     : Libre
+  - mutexDelais       : Libre
+  - mutexScore        : Libre
+  - mutexNbFantomes   : Libre
+  - mutexCaseDispo    : Libre
+  - mutexEtat         : Libre
+Obstacle  : 
+------------------------------------------------------------------------- 
+	                   Mur            
+	 Vide             Vide              Vide           
+	                   Mur            
+------------------------------------------------------------------------- 
+
+[xcb] Unknown request in queue while dequeuing
+[xcb] Most likely this is a multi-threaded client and XInitThreads has not been called
+[xcb] Aborting, sorry about that.
+PacMan: xcb_io.c:165: dequeue_pending_request: Assertion `!xcb_xlib_unknown_req_in_deq' failed.
+make
+^L^C^C
